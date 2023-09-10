@@ -1,0 +1,82 @@
+   {% load bootstrap4 %}  
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+
+        <meta name="viewport" content="width, initial-scale=1, shrink-to-fit=no">
+<!--  Этот тег необходим для того чтобы Bootstrap правильно обработал страницу-->
+
+        <title>{% block title %}Главная{% endblock %} - Центр занятости </title>  
+        
+        {% bootstrap_css %}   <!-- Привязка к странице таблицы стилей Bootstrap -->
+
+        <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}"> 
+        
+        {% bootstrap_javascript jquery='slim' %}
+</head>
+    <body class="container-fluid">  
+        <header class="mb-4">
+       <h1 class="display-1 text-center">Центр занятости</h1>
+
+</header>
+            <div class="row">
+<
+                <ul class="col nav justify-content-end border">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'main:register' %}">Регистрация</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown"
+                        href="#" role="button" aria-haspopup="true" aria-expanded="false">Профиль</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{%  url 'main:profile' %}">Мои публикации</a>
+                            <a class="dropdown-item" href="{% url 'main:profile_change' %}">Изменить личные данные</a>
+                            <a class="dropdown-item" href="{% url 'main:password_change' %}">Изменить пароль</a>
+                           <div class="dropdown-divider"></div>
+                           <a class="dropdown-item" href="{% url 'main:logout' %}">Выйти</a>
+                           <div class="dropdown-divider"></div>
+                           <a class="dropdown-item" href="#">Удалить</a>
+                        </div>
+                    </li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" 
+                        href="{% url 'main:login' %}">Вход </a></li>
+                    {% endif %}
+                </ul></div>
+                    <div class="row">
+                        <nav class="col-md-auto nav flex-column border">
+                            <a class="nav-link root" href="{% url 'main:index' %}">Главная</a>
+                            <span class="nav-link root font-weight-bold">Выделенный заголовок</span>
+                            <a class="nav-link" href="#">Промышленность</a>
+                            <a class="nav-link" href="#">Сельское хозяйство</a>
+                            <a class="nav-link" href="#">Лесное хозяйство</a>
+                            <a class="nav-link" href="#">Строительство</a>
+                            <a class="nav-link" href="#">Связь</a>
+                            <a class="nav-link" href="#">Торговля</a>
+                            <a class="nav-link" href="#">Здравоохранение</a>
+                            <a class="nav-link" href="#">Образование</a>
+                            <a class="nav-link" href="#">Культура и исскуство</a>
+                            <a class="nav-link" href="#">Управление</a>
+                            <a class="nav-link root" href="{% url 'main:other' page='about' %}">О сайте</a>
+                        </nav>
+
+
+                        <section class="col border py-2">
+ <!-- Класс py-2 устанавливает для тего небольшие внутренние отступы сверху и снизу, чтобы содержимое
+тега не примыкало к рамке вплотную -->
+                            {% bootstrap_messages %}
+                            {% block content %}
+                            {% endblock %}
+  <!-- В семантическую секцию мы поместили код, выводящий всплывающие сообщения, и блок content,
+в котором будет выводится основное содержимое страниц  -->
+                        </section>
+                    </div>
+
+               <footer class="mt-3">
+                        <p class="text-right font-italic">&copy; читатели.</p>
+                    </footer>
+ 
+                </body>
+            </html>
+
