@@ -3,24 +3,22 @@ from django.shortcuts import render
 from django.http import HttpResponse,Http404 #
 from django.template import TemplateDoesNotExist #
 from django.template.loader import get_template #
-#from django.contrib.auth.views import LoginView
-#from django.contrib.auth.decorators import login_required
-#from django.contrib.auth.views import LogoutView
-#from django.contrib.auth.mixins import LoginRequiredMixin
-#from django.views.generic.edit import UpdateView
-#from django.contrib.messages.views import SuccessMessageMixin
-#from django.urls import reverse_lazy
-#from django.shortcuts import get_object_or_404
-#from .models import AdvUser
-#from .forms import ChangeUserInfoForm
-#from django.contrib.auth.views import PasswordChangeView
-#from django.views.generic.edit import CreateView
-#from .forms import RegisterUserForm
-#from django.views.generic.base import TemplateView
-#from django.core.signing import BadSignature
-#from .utilities import signer
-
-"""
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LogoutView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import UpdateView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
+from main.models import AdvUser
+from main.forms import ChangeUserInfoForm
+from django.contrib.auth.views import PasswordChangeView
+from django.views.generic.edit import CreateView
+from main.forms import RegisterUserForm
+from django.views.generic.base import TemplateView
+from django.core.signing import BadSignature
+from main.utilities import signer
 
 @login_required # Декоратор который проверяет залогинился ли пользователь
 def profile(request):  # Контроллер страницы пользовательского профиля
@@ -55,7 +53,7 @@ class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         self.user_id = request.user.pk
         return super().setup(request, *args, **kwargs)
     
-    
+       
     def user_activate(request, sign):
         try:
             username = signer.unsign(sign)
@@ -85,7 +83,7 @@ class BBLoginView(LoginView): # Класс для реализации конт�
 
 class BBLogoutView(LoginRequiredMixin, LogoutView): # Класс для реализации контроллера страницы выхода
         template_name = 'main/logout.html'
-    """
+    
 
 def index(request):  # Контроллер для Главной страницы
     return render(request, 'main/index.html')

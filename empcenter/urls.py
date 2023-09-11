@@ -28,7 +28,8 @@ urlpatterns = [
 """
 Статические файлы сайта не будут кэшироваться веб-обозревателем - 
 так как работа над таблицей ещё не завершена
-"""
+
 
 if settings.DEBUG:
     urlpatterns.append(path('static/<path:path>', never_cache(serve)))
+"""
