@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
-#from django.conf import settings #
+from django.conf import settings #
 
 from django.dispatch import Signal
 from .utilities import send_activation_notification
@@ -13,7 +13,7 @@ class MainConfig(AppConfig):
 verbose_name = 'Центр занятости'
 
 # Объявляем сигнал user_registered и привязываем к нему обработчик
-#sender = settings.AUTH_USER_MODEL
+sender = settings.AUTH_USER_MODEL #
 #user_registered = Signal(providing_args=['instance']) # 
 user_registered = Signal('instance') 
 

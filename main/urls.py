@@ -15,17 +15,18 @@ Including another URLconf
 """
 
 
-"""  Маршруты на уровне приложения  """
+"""  Маршруты  уровня приложения  """
 
-from .views import other_page
+from . import views
+from main.views import other_page
 from django.urls import path
-from .views import index
-from .views import BBLoginView
-from .views import profile
-from .views import BBLogoutView
-from .views import ChangeUserInfoView
-from .views import BBPasswordChangeView
-from .views import RegisterUserView, RegisterDoneView
+from main.views import index
+from main.views import BBLoginView
+from main.views import profile
+from main.views import BBLogoutView
+from main.views import ChangeUserInfoView
+from main.views import BBPasswordChangeView
+from main.views import RegisterUserView, RegisterDoneView
 from .views import user_activate
 
 

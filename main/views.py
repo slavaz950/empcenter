@@ -20,6 +20,23 @@ from django.views.generic.base import TemplateView
 from django.core.signing import BadSignature
 from main.utilities import signer
 
+
+def user_activate(request, sign):  # Контроллер для активации пользователя
+        try:
+            username = signer.unsign(sign)
+        except BadSignature:
+            return render(request, 'main/bad_signature.html')
+        user = get_object_or_404(AdvUser, username=username)
+        if user.is_activated:
+            template = 'main/user_is_activated.html'
+        else:
+            template = 'main/activation_done.html'
+            user.is_active = True
+            user.is_activated = True
+            user.save()
+        return render(request, template)
+
+
 @login_required # Декоратор который проверяет залогинился ли пользователь
 def profile(request):  # Контроллер страницы пользовательского профиля
         return render(request, 'main/profile.html') 
@@ -54,21 +71,22 @@ class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return super().setup(request, *args, **kwargs)
     
        
-    def user_activate(request, sign):
-        try:
-            username = signer.unsign(sign)
-        except BadSignature:
-            return render(request, 'main/bad_signature.html')
-        user = get_object_or_404(AdvUser, username=username)
-        if user.is_activated:
-            template = 'main/user_is_activated.html'
-        else:
-            template = 'main/activation_done.html'
-            user.is_active = True
-            user.is_activated = True
-            user.save()
-        return render(request, template)
-
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
 
 
     def get_object(self, queryset=None):
