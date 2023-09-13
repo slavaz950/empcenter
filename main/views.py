@@ -46,7 +46,7 @@ class RegisterUserView(CreateView):
     model = AdvUser
     template_name = 'main/register_user.html'
     form_class = RegisterUserForm
-    success_url = reverse_lazy('main:register_done')
+    success_url = reverse_lazy('main:register_done') # В случае удачи переходим на страницу .....
 
 # Контроллер выводящий сообщение об успешной регистрации
 class RegisterDoneView(TemplateView):

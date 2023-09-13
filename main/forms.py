@@ -8,6 +8,18 @@ from .apps import user_registered
 
 
 
+class ChangeUserInfoForm(forms.ModelForm):
+    email = forms.EmailField(required=True, label='Адрес электронной почты')
+    
+    '''  
+    class Meta:
+        model = AdvUser
+        fields = ('username','email','password1','password2','first_name','last_name','send_messages')
+    '''
+    class Meta:
+        model = AdvUser
+        fields = ('username', 'email', 'first_name', 'last_name','send_messages')
+
 class RegisterUserForm(forms.ModelForm):
     email = forms.EmailField(required=True, label='Адрес электронной почты')
     password1 = forms.CharField(label='Пароль',
@@ -42,18 +54,11 @@ class RegisterUserForm(forms.ModelForm):
         user_registered.send(RegisterUserForm, instance = user)
         return user
 
-
-
-class ChangeUserInfoForm(forms.ModelForm):
-    email = forms.EmailField(required=True, label='Адрес электронной почты')
-    
-    '''  
+ 
     class Meta:
         model = AdvUser
         fields = ('username','email','password1','password2','first_name','last_name','send_messages')
     
-    
-    '''
-    class Meta:
-        model = AdvUser
-        fields = ('username', 'email', 'first_name', 'last_name','send_messages')
+
+
+       
