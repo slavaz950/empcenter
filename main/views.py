@@ -18,7 +18,7 @@ from django.views.generic.edit import CreateView
 from main.forms import RegisterUserForm
 from django.views.generic.base import TemplateView
 from django.core.signing import BadSignature
-from main.utilities import signer
+from .utilities import signer
 
 
 def user_activate(request, sign):  # Контроллер для активации пользователя
@@ -65,6 +65,7 @@ class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     template_name = 'main/change_user_info.html'
     form_class = ChangeUserInfoForm
     success_message = 'Данные пользователя изменены'
+    success_url = reverse_lazy('main:profile')  #
 
     def setup(self, request, *args, **kwargs):
         self.user_id = request.user.pk

@@ -88,6 +88,10 @@ DATABASES = {
 
 AUTH_USER_MODEL = 'main.AdvUser'
 
+#LOGIN_REDIRECT_URL = reverse_lazy("main:profile")
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -126,4 +130,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = reverse_lazy("main:profile")
+

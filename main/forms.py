@@ -30,7 +30,7 @@ class RegisterUserForm(forms.ModelForm):
      help_text='Введите тот же самый пароль для проверки')
      
     def clean_password1(self):
-        password1 = self.cleaned_data['pasword1']
+        password1 = self.cleaned_data['password1']
         if password1:
             password_validation.validate_password(password1)
         return password1
@@ -54,11 +54,14 @@ class RegisterUserForm(forms.ModelForm):
         user_registered.send(RegisterUserForm, instance = user)
         return user
 
- 
+    '''
     class Meta:
         model = AdvUser
         fields = ('username','email','password1','password2','first_name','last_name','send_messages')
+    '''
+class Meta:
+        model = AdvUser
+        fields = ('email','password1','password2')
     
-
 
        

@@ -5,6 +5,7 @@ from django.conf import settings #
 from django.dispatch import Signal
 from .utilities import send_activation_notification
 
+
 #
 
 class MainConfig(AppConfig):
