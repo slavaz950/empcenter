@@ -21,6 +21,8 @@ from django.core.signing import BadSignature
 from .utilities import signer
 
 
+
+
 def user_activate(request, sign):  # Контроллер для активации пользователя
         try:
             username = signer.unsign(sign)
@@ -57,6 +59,14 @@ class BBPasswordChangeView(SuccessMessageMixin, LoginRequiredMixin, PasswordChan
     template_name = 'main/password_change.html'
     success_url = reverse_lazy('main:profile')
     success_message = 'Пароль пользователя изменён'
+    
+# Контроллер класса "Входа"   #########
+class BBLoginView(LoginView):
+    template_name = 'main/login.html' 
+    
+# Контроллер класса "Выхода" ################
+class BBLogoutView(LoginRequiredMixin, LogoutView):
+    template_name = 'main/logout.html'  
 
 
 # Контроллер класса изменяющий данные пользователя
@@ -70,6 +80,11 @@ class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def setup(self, request, *args, **kwargs):
         self.user_id = request.user.pk
         return super().setup(request, *args, **kwargs)
+    
+    def get_object(self, queryset=None):
+        if not queryset:
+            queryset = self.self.get_queryset()
+        return get_object_or_404(queryset, pk=self.user_id)
     
        
    
