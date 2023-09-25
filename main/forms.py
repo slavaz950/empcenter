@@ -10,7 +10,7 @@ from .apps import user_registered
 class ChangeUserInfoForm(forms.ModelForm):
     email = forms.EmailField(required=True, label='Адрес электронной почты')
 
-    '''  
+    '''
     class Meta:
         model = AdvUser
         fields = ('username', 'email', 'password1', 'password2', 'first_name', 'last_name', 'send_messages')
@@ -19,8 +19,8 @@ class ChangeUserInfoForm(forms.ModelForm):
     class Meta:
         model = AdvUser
         fields = ('username', 'email', 'first_name', 'last_name', 'send_messages')
-
-
+        
+   
 class RegisterUserForm(forms.ModelForm):
     email = forms.EmailField(required=True, label='Адрес электронной почты')
     password1 = forms.CharField(label='Пароль',
@@ -37,13 +37,13 @@ class RegisterUserForm(forms.ModelForm):
         return password1
 
     def clean(self):
-
         super().clean()
+        ##cleaned_data = super().clean()
         password1 = self.cleaned_data['password1']
         password2 = self.cleaned_data['password2']
         if password1 and password2 and password1 != password2:
-            errors = {'password2':
-                          ValidationError(' Введённые пароли не совпадают', code='password_mismatch')}
+            errors = {'password2': ValidationError(
+                ' Введённые пароли не совпадают', code='password_mismatch')}
             raise ValidationError(errors)
 
     def save(self, commit=True):
@@ -58,7 +58,8 @@ class RegisterUserForm(forms.ModelForm):
 
     class Meta:
         model = AdvUser
-        fields = ('username', 'email', 'password1', 'password2', 'first_name', 'last_name', 'send_messages')
+        fields = ('username', 'email', 'password1', 'password2', 
+                  'first_name', 'last_name', 'send_messages')
 
     '''
     class Meta:

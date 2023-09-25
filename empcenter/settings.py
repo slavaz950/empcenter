@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from django.urls import reverse_lazy
+from django.core.mail.backends.smtp import EmailBackend
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,9 +25,27 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'v8p7m8qq23*8cr(ivlh203$1kjn$niz6gdu$33u3wm!-8qi*0m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =  True    #True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS =  []   #  "http://127.0.0.1:8000/"" #   "192.168.3.45"
+
+EMAIL_HOST = 'localhost' # Интернет-адрес SMTP-сервера, которому будут отправляться письма ('localhost' по умолчанию)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # Строка с именем класса, который реализует отправку писем 
+DEFAULT_FROM_EMAIL = "webmaster@localhost"   # Адрес электронной почты отправителя, по умолчанию указываемый
+EMAIL_PORT = 1025  # Номер  TCP- порта, через который работает  SMTP-сервер, в виде числа(По умолчанию: 25)
+
+
+"""
+# Настройка smtp-сервера на Яндексе
+EMAIL_HOST = 'smtp.yandex.ru'   # Доменное имя почтового SMTP-сервера Яндекса
+EMAIL_PORT = 465   # Порт почтового SMTP-сервера Яндекса. Перед использованием рекомендуется загуглить и проверить его актуальность
+EMAIL_USE_TLS = False   # Может работать только один из них. Поэтому
+EMAIL_USE_SSL = True     # один False другой True. Всё зависит от настроек (в данном случае Яндекса)
+
+EMAIL_HOST_USER = 'empcenter@yandex.ru'  # Логин Яндекса (пишем полностью (Рекомендуется. Но возможно буду работать и другие варианты написания))
+EMAIL_HOST_PASSWORD = 'egcvsgrizerdrhpi'   #  Пароль приложения который получили в Яндексе. (В случае забыли(потеряли) в Яндексе удаляем и создаём новый )
+DEFAULT_FROM_EMAIL = 'empcenter@yandex.ru'   # Если отправитель не задан руками. 
+"""
 
 EMAIL_PORT = 1025
 
