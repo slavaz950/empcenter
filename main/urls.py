@@ -28,6 +28,7 @@ from main.views import ChangeUserInfoView
 from main.views import BBPasswordChangeView
 from main.views import RegisterUserView, RegisterDoneView
 from .views import user_activate
+from .views import DeleteUserView
 
 
 
@@ -38,6 +39,7 @@ urlpatterns = [
     path('accounts/register/', RegisterUserView.as_view(), name='register'),
     path('accounts/logout/', BBLogoutView.as_view(), name='logout'),
     path('accounts/password/change/', BBPasswordChangeView.as_view(), name='password_change'),
+    path('accounts/profile/delete/', DeleteUserView.as_view(), name='profile_delete'),
     path('accounts/profile/change/', ChangeUserInfoView.as_view(), name='profile_change'),
     path('accounts/profile/',profile, name='profile'),
     path('accounts/login/', BBLoginView.as_view(), name='login'), 

@@ -29,6 +29,9 @@ DEBUG =  True    #True
 
 ALLOWED_HOSTS =  []   #  "http://127.0.0.1:8000/"" #   "192.168.3.45"
 
+
+"""
+# Настройка для отладочного smtp-сервера Джанго
 EMAIL_HOST = 'localhost' # Интернет-адрес SMTP-сервера, которому будут отправляться письма ('localhost' по умолчанию)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # Строка с именем класса, который реализует отправку писем 
 DEFAULT_FROM_EMAIL = "webmaster@localhost"   # Адрес электронной почты отправителя, по умолчанию указываемый
@@ -44,10 +47,12 @@ EMAIL_USE_SSL = True     # один False другой True. Всё зависи
 
 EMAIL_HOST_USER = 'empcenter@yandex.ru'  # Логин Яндекса (пишем полностью (Рекомендуется. Но возможно буду работать и другие варианты написания))
 EMAIL_HOST_PASSWORD = 'egcvsgrizerdrhpi'   #  Пароль приложения который получили в Яндексе. (В случае забыли(потеряли) в Яндексе удаляем и создаём новый )
-DEFAULT_FROM_EMAIL = 'empcenter@yandex.ru'   # Если отправитель не задан руками. 
-"""
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER    
+SERVER_EMAIL = EMAIL_HOST_USER 
+EMAIL_ADMIN =EMAIL_HOST_USER 
 
-EMAIL_PORT = 1025
+
+#EMAIL_PORT = 1025  # Порт для отладочного сервера
 
 
 # Application definition
