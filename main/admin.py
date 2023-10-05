@@ -49,6 +49,10 @@ class AdvUserAdmin(admin.ModelAdmin):
               ('last_login', 'date_joined'))
     realdony_fields = ('last_login', 'date_joined')
     actions = (send_activation_notifications,)  
+    
+admin.site.register(AdvUser, AdvUserAdmin) # Удалить если не потребуется   
+    
+    
 
 # Редактор рубрик
 class SubRubricInline(admin.TabularInline):
@@ -62,10 +66,10 @@ class SuperRubricAdmin(admin.ModelAdmin):
     
 class SubRubricAdmin(admin.ModelAdmin):
     form = SubRubricForm    
-    
 
-admin.site.register(AdvUser, AdvUserAdmin, SuperRubric, SuperRubricAdmin, SubRubric, SubRubricAdmin)  
-#admin.site.register(AdvUser, AdvUserAdmin) # Удалить если не потребуется
-# admin.site.register(SuperRubric, SuperRubricAdmin)   # Удалить если не потребуется
+
+admin.site.register(SuperRubric, SuperRubricAdmin)   # Удалить если не потребуется
+admin.site.register(SubRubric, SubRubricAdmin)   # Удалить если не потребуется
+    
     
 # Register your models here.
