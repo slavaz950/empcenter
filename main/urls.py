@@ -29,6 +29,7 @@ from main.views import BBPasswordChangeView
 from main.views import RegisterUserView, RegisterDoneView
 from .views import user_activate
 from .views import DeleteUserView
+#from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView
 
 
 
@@ -45,5 +46,9 @@ urlpatterns = [
     path('accounts/login/', BBLoginView.as_view(), name='login'), 
     path('<str:page>/', other_page, name='other'), 
     path('', index, name='index'),
+    
+  
+     
+     
 ]
 
