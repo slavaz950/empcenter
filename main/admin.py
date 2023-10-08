@@ -7,6 +7,7 @@ from .models import SuperRubric, SubRubric
 from .forms import SubRubricForm
 
 
+
 #
 # Регистрация действия, которое разошлёт пользователям письма 
 # # с предписаниями выполнить активацию
@@ -63,12 +64,11 @@ class SuperRubricAdmin(admin.ModelAdmin):
     exclude = ('super_rubric',)
     inlines = (SubRubricInline,)
     
+admin.site.register(SuperRubric, SuperRubricAdmin)   # Удалить если не потребуется --------
     
 class SubRubricAdmin(admin.ModelAdmin):
     form = SubRubricForm    
 
-
-admin.site.register(SuperRubric, SuperRubricAdmin)   # Удалить если не потребуется
 admin.site.register(SubRubric, SubRubricAdmin)   # Удалить если не потребуется
     
     

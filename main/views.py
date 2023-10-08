@@ -25,6 +25,12 @@ from django.views.generic.edit import DeleteView
 from django.contrib.auth import logout
 from django.contrib import messages
 
+
+# Контроллер-функция для рубрик (Пустой)
+def by_rubric(request, pk):
+        pass 
+   
+
 # Контроллер для удаления пользователя
 class DeleteUserView(LoginRequiredMixin,DeleteView):
     model = AdvUser
@@ -110,25 +116,7 @@ class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
             queryset = self.self.get_queryset()
         return get_object_or_404(queryset, pk=self.user_id)
     
-       
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-
-
+    
     def get_object(self, queryset=None):
         if not queryset:
             queryset = self.get_queryset()

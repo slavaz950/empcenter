@@ -49,6 +49,8 @@
                         <nav class="col-md-auto nav flex-column border">
                             <a class="nav-link root" href="{% url 'main:index' %}">Главная</a>
                             <span class="nav-link root font-weight-bold">Выделенный заголовок</span>
+
+<!-- 
                             <a class="nav-link" href="#">Промышленность</a>
                             <a class="nav-link" href="#">Сельское хозяйство</a>
                             <a class="nav-link" href="#">Лесное хозяйство</a>
@@ -58,7 +60,30 @@
                             <a class="nav-link" href="#">Здравоохранение</a>
                             <a class="nav-link" href="#">Образование</a>
                             <a class="nav-link" href="#">Культура и исскуство</a>
-                            <a class="nav-link" href="#">Управление</a>
+                            <a class="nav-link" href="#">Управление</a>                -->
+
+
+                            <!-- Перебираем список подрубрик из переменной rubrics
+                                контекста шаблона (эту переменную создал обработчик контекста empcenter_context_processor())
+                                и для каждой подрубрики выводим:
+
+                                - Если ключ связанной надрубрики изменился (т.е. если начали выводится подрубрики из другой надрубрики)
+                                    Пункт с именем надрубрики
+                                
+                                - Пункт-гиперссылку с именем подрубрики  --> 
+
+                                {% for rubric in rubrics %} 
+                                
+                                {% {% ifchanged rubric.super_rubric.pk %}
+                                <span class="nav-link root-weight-bold">
+                                    {{ rubric.super_rubric.name }}</span>
+                                    {% endifchanged %} 
+                                    <a class="nav-link" href="{% url 'main:other' page='about' %}">О сайте</a>
+
+<!--  -->
+
+
+<!--  -->
                             <a class="nav-link root" href="{% url 'main:other' page='about' %}">О сайте</a>
                         </nav>
 
