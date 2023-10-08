@@ -31,6 +31,7 @@ from .views import user_activate
 from .views import DeleteUserView
 from main.views import by_rubric
 
+
 #from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView
 
 

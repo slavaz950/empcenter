@@ -73,14 +73,15 @@
                                 - Пункт-гиперссылку с именем подрубрики  --> 
 
                                 {% for rubric in rubrics %} 
-                                
-                                {% {% ifchanged rubric.super_rubric.pk %}
+                                {% ifchanged rubric.super_rubric.pk %}
                                 <span class="nav-link root-weight-bold">
                                     {{ rubric.super_rubric.name }}</span>
                                     {% endifchanged %} 
-                                    <a class="nav-link" href="{% url 'main:other' page='about' %}">О сайте</a>
+                                    <a class="nav-link" href="{% url 'main:by_rubric' pk=rubric.pk %}">
+                                        {{ rubric.name }}</a>
+                                        {% endfor %}
 
-<!--  -->
+                                <!--    <a class="nav-link" href="{% url 'main:other' page='about' %}">О сайте</a> -->
 
 
 <!--  -->

@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'v8p7m8qq23*8cr(ivlh203$1kjn$niz6gdu$33u3wm!-8qi*0m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =  True    #True
+DEBUG = True    # #     True   False 
 
 ALLOWED_HOSTS =  []   #  "http://127.0.0.1:8000/"" #   "192.168.3.45"
 
@@ -75,7 +75,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
     'bootstrap4',
+    'django_cleanup', # Удаляет выгруженные файлы после удаления хранящих их записей модулей
+    'easy_thumbnails', # Создаёт миниатюры
 ]
+    
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -163,5 +166,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+THUMBNALL_ALIASES = {
+    '': {
+        'default': {
+            'size': (96,96),  # Масштабирование для миниатюр
+            'crop': 'scale',  # Имя вложенной папки в которой хранятся миниатюры
+        },
+    },
+}
 
 
