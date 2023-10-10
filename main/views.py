@@ -25,7 +25,7 @@ from django.views.generic.edit import DeleteView
 from django.contrib.auth import logout
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.db.models import QuerySet
+from django.db.models import Q
 from .models import SubRubric, Bb
 from .forms import SearchForm
 
