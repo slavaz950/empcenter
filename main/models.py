@@ -6,6 +6,12 @@ class AdvUser(AbstractUser):
     is_activated = models.BooleanField(default=True, db_index=True, verbose_name='Прошёл активацию?')
     send_messages = models.BooleanField(default=True, verbose_name='Слать оповещения о новых комментариях?')
     
+    # При удалении пользователя удаляются оставленные им объявления
+    def delete(self, *args, **kwargs): 
+        for bb in self.bb_set.all():
+            bb.delete()
+        super().delete(*args, **kwargs)
+    
 class Meta(AbstractUser.Meta): pass
 
    
