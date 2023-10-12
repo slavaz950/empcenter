@@ -169,6 +169,16 @@ def other_page(request, page):  # Контроллер для вспомагат
     return HttpResponse(template.render(request=request)) 
 
 
+
+# Веб-страница сведений о выбранном объявлении
+def detail(request, rubric_pk, pk):
+    bb = get_object_or_404(Bb, pk=pk)
+    ais = bb.additionalimage_set.all()
+    context = {'bb': bb, 'ais' : ais}
+    return render(request, 'main/detail.html', context)
+# Помимо самой публикации, которую мы помещаем в переменную bb контекста шаблона, также готовим перечень
+# связанных с ним дополнительных иллюстраций, записав его в переменную ais
+
      
 
 # Create your views here.
