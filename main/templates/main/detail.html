@@ -1,0 +1,53 @@
+{% extends "layout/basic.html" %}
+
+{% block title %} {{ bb.title }} - {{ bb.rubric.name }} {% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-3">
+<!--    
+    Выводятся основные сведения о публикации (название, описание, контакты, временнУю отметку добавления публикации, 
+    основную иллюстрацию, если таковая указана)
+-->
+ <div class="row">
+        {% if bb.image %}
+        <div class="col-md-auto"><img src="{{ bb.image.url }}"
+        class="main-image"></div>
+        {% endif %}
+        <div class="col">
+            <h2>{{ bb.title }}</h2>
+            <p>{{ bb.content }}</p>
+            <p class="font-weight-bold">{{ bb.price }} руб.</p>
+            <p>{{ bb.contacts }}</p>
+            <p class="text-right font-italic">Добавлено
+            {{ bb.created_at }}</p>
+         <!-- Окончание блока с основными сведениями  --> 
+        </div>
+    </div>
+</div>
+{% if ais %}
+
+<!-- Выводятся дополнительные иллюстрации  --> 
+<div class="d-flex justify-content-between flex-wrap mt-5">
+<!-- 
+d-flex - Устанавливает для элемента гибкую разметку, при которой дочерние элементы выстраиваются внутри родителя
+по горизонтали
+
+justify-content-between - Указывает, что дочерние элементы (собственно дополнительные иллюстрации) должны располагаться
+внутри родителя на равномерном расстоянии друг от друга
+
+flex-wrap - Если дочерним элементам не хватит места, чтобы выстроится по горизонтали, то не помещающиеся элементы
+будут перенесены на следующую строку
+
+mt-5  - большой внешний отступ сверху, чтобы отделить дополнительные иллюстрации от основной информации
+
+-->
+
+
+    {% for ai in ais %}
+    <div>
+        <img class="additional-image" src="{{ ai.image.url }}">
+    </div>
+    {% endif %}
+    <p><a href="{% url 'main:by_rubric' pk=bb.rubric.pk %}{{ all }}">Назад</a></p>
+    {% endblock %}
+        
