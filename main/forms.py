@@ -4,6 +4,8 @@ from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
 from .apps import user_registered
 from .models import SuperRubric, SubRubric
+from django.forms import inlineformset_factory
+from .models import Bb, AdditionalImage
 
 # Форма 
 class ChangeUserInfoForm(forms.ModelForm):
@@ -80,5 +82,24 @@ class SubRubricForm(forms.ModelForm):
 # Форма поиска
 class SearchForm(forms.Form):
     keyword = forms.CharField(required=False, max_length=20, label='')
+    
+    
+    
+# Форма для ввода публикации, связанная с моделью Bb
+#
+# В форме будем выводить все поля модели Bb. Для поля автора публикации author зададим  
+# в качестве элемента управления HiddenInput, т.е. скрытое поле - все равно значение туда 
+# будет заноситься программно.
+
+class BbForm(forms.ModelForm):
+    class Meta:
+        model = Bb
+        fields = '__all__'
+        widgets = {'author': forms.HiddenInput}
+        
+ # Встроенный набор форм  AIFormSe связанный с моделью AdditionalImage в которые будут заноситься 
+ # дополнительные иллюстрации     
+AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')
+
 
 

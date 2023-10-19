@@ -31,6 +31,8 @@ from .views import user_activate
 from .views import DeleteUserView
 from main.views import by_rubric
 from .views import detail
+from .views import profile_bb_detail
+from .views import profile_bb_add
 
 
 #from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView
@@ -45,6 +47,8 @@ urlpatterns = [
     path('accounts/password/change/', BBPasswordChangeView.as_view(), name='password_change'),
     path('accounts/profile/delete/', DeleteUserView.as_view(), name='profile_delete'),
     path('accounts/profile/change/', ChangeUserInfoView.as_view(), name='profile_change'),
+    path('accounts/profile/add/', profile_bb_add, name='profile_bb_add'),
+    path('accounts/profile/<int:pk>/', profile_bb_detail, name='profile_bb_detail'),
     path('accounts/profile/',profile, name='profile'),
     path('accounts/login/', BBLoginView.as_view(), name='login'),
     path('<int:rubric_pk>/<int:pk>', detail, name='detail'), 

@@ -26,8 +26,10 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q
-from .models import SubRubric, Bb
+from .models import AdvUser,SubRubric, Bb, Comment
 from .forms import SearchForm
+from django.shortcuts import redirect
+from .forms import BbForm, AIFormSet
 
 # Контроллер-функция для рубрик (Пустой)
 def by_rubric(request, pk):
@@ -92,7 +94,11 @@ def user_activate(request, sign):  # Контроллер для активац�
 
 @login_required # Декоратор который проверяет залогинился ли пользователь
 def profile(request):  # Контроллер страницы пользовательского профиля
-        return render(request, 'main/profile.html') 
+    bbs = Bb.objects.filter(author=request.user.pk) #  Фильтруем публикации по значению поля author
+    context = {'bbs': bbs}  # (ключ автора объявления, которым является зарегистрированный пользователь), сравнивая
+    # это значение с ключом текущего пользователя
+    
+    return render(request, 'main/profile.html',context) 
     
     # Контроллер регистрирующий пользователя
 class RegisterUserView(CreateView):
@@ -153,7 +159,9 @@ class BBLogoutView(LoginRequiredMixin, LogoutView): # Класс для реал
     
 
 def index(request):  # Контроллер для Главной страницы
-    return render(request, 'main/index.html')
+    bbs = Bb.objects.filter(is_active=True) [:10]  # Выбираем из базы последние 10 страниц
+    context = {'bbs': bbs}
+    return render(request, 'main/index.html', context)
 
 def other_page(request, page):  # Контроллер для вспомагательных страниц
     try:
@@ -179,7 +187,45 @@ def detail(request, rubric_pk, pk):
 # Помимо самой публикации, которую мы помещаем в переменную bb контекста шаблона, также готовим перечень
 # связанных с ним дополнительных иллюстраций, записав его в переменную ais
 
-     
+def profile_bb_detail(request, pk):
+    bb = get_object_or_404(Bb, pk=pk)
+    ais = bb.additionalimage_set.all()
+    comments = Comment.objects.filter(bb=pk, is_active=True)
+    context = {'bb': bb, 'ais': ais, 'comments': comments}
+    return render(request, 'main/profile_bb_detail.html', context) 
+
+
+#
+# Контроллер добавляющий объявление
+@login_required
+def profile_bb_add(request):
+    if request.method == 'POST':
+        form = BbForm(request.POST, request.FILES)
+        if form.is_valid():
+            bb = form.save()
+            formset = AIFormSet(request.POST, request.FILES, instance=bb)
+            # Во время сохранения введённой публикации, при создании объектов формы и набора форм
+            # мы должны передать конструкторам их классов вторым позиционным параметром словарь
+            # со всеми полученными файлами (он хранится в атрибуте FILES объекта запроса). Если
+            # мы не сделаем этого, то отправленные пользователем иллюстрации окажутся потерянными.
+           
+           # При сохранении мы сначала выполняем валидацию и сохранение формы самой публикации.
+           # Метод save() в качестве результата возвращает сохраненную запись, и эту запись мы должны передать
+           # через параметр instance конструктору класса набора форм. Это нужно для того, чтобы все
+           # дополнительные иллюстрации после сохранения оказались связанными с публикацией.
+           
+            if formset.is_valid():
+                formset.save()
+                messages.add_message(request, messages.SUCCESS, 'Объявление добавлено')
+                return redirect('main:profile')
+            else:
+                form = BbForm(initial={'author': request.user.pk})
+                formset = AIFormSet()
+            context = {'form': form, 'formset': formset}
+            return render(request, 'main/profile_bb_add.html', context)
+
+
+
 
 # Create your views here.
 #
