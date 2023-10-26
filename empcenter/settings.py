@@ -79,12 +79,16 @@ INSTALLED_APPS = [
     'django_cleanup', # Удаляет выгруженные файлы после удаления хранящих их записей модулей
     'easy_thumbnails', # Создаёт миниатюры
     'captcha',
+    'rest_framework',
+    'corsheaders',
+    'api.apps.ApiConf',
 ]
     
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -180,4 +184,6 @@ THUMBNALL_ALIASES = {
     },
 }
 
-
+# Разрешение доступа к веб-службе (API) с любого домена
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r'^/api/.*$'

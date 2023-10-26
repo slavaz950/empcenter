@@ -116,6 +116,9 @@ class UserCommentForm(forms.ModelForm):
         связан комментарий, укажем в качестве элемента управления скрытое поле 
         """
 
+
+
+
 # Форма Комментариев оставленных Незарегистрированными пользователями сайта (Гостями)
 class GuestCommentForm(forms.ModelForm):
     captcha = CaptchaField(label= 'Введите текст с картинки', error_messages={'invalid': 'Неправильный текст'})
