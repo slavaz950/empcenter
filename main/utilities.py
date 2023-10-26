@@ -19,3 +19,16 @@ def send_activation_notification(user):  # Функция для рассылк�
 # Генерация имён сщхраняемых в моделях выгруженных файлов
 def get_timestamp_path(instance, filename):
     return '%s%s' % (datetime.now().timestamp(), splitext(filename) [1])
+
+# Функция для отправки уведомлений о появлении новых комментариев
+def send_new_comment_notification(comment):
+    if ALLOWED_HOSTS:
+        host = 'http://' + ALLOWED_HOSTS[0]
+    else:
+        host = 'http://localhost:8000'
+    author = comment.bb.author
+    context = {'author': author, 'host': host, 'comment': comment}
+    subject = render_to_string('email/new_comment_letter_subject.txt', context)
+    body_text = render_to_string('email/new_comment_letter_body.txt', context)
+    author.email_user(subject, body_text)
+

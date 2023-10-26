@@ -25,6 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'v8p7m8qq23*8cr(ivlh203$1kjn$niz6gdu$33u3wm!-8qi*0m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# ПРЕДУПРЕЖДЕНИЕ БЕЗОПАСНОСТИ: не запускайте с включенной отладкой в рабочей среде.
 DEBUG = True    # #     True   False 
 
 ALLOWED_HOSTS =  []   #  "http://127.0.0.1:8000/"" #   "192.168.3.45"
@@ -77,6 +78,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'django_cleanup', # Удаляет выгруженные файлы после удаления хранящих их записей модулей
     'easy_thumbnails', # Создаёт миниатюры
+    'captcha',
 ]
     
 

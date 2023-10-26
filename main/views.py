@@ -30,6 +30,8 @@ from .models import AdvUser,SubRubric, Bb, Comment
 from .forms import SearchForm
 from django.shortcuts import redirect
 from .forms import BbForm, AIFormSet
+from .models import Comment
+from .forms import UserCommentForm, GuestCommentForm
 
 # Контроллер-функция для рубрик (Пустой)
 def by_rubric(request, pk):
@@ -182,7 +184,24 @@ def other_page(request, page):  # Контроллер для вспомагат
 def detail(request, rubric_pk, pk):
     bb = get_object_or_404(Bb, pk=pk)
     ais = bb.additionalimage_set.all()
-    context = {'bb': bb, 'ais' : ais}
+    comments = Comment.objects.filter(bb=pk, is_active=True)
+    initial = {'bb': bb.pk}
+    if request.user.is_authenticated:
+        initial['author'] = request.user.username
+        form_class = UserCommentForm
+    else:
+        form_class = GuestCommentForm
+    form = form_class(initial=initial)
+    if request.method == 'POST':
+        c_form = form_class(request.POST)
+        if c_form.is_valid():
+            c_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Комментарий добавлен')
+        else:
+            form = c_form
+            messages.add_message(request, messages.WARNING, 'Комментарий не добавлен')    
+    
+    context = {'bb': bb, 'ais' : ais, 'comments': comments, 'form': form}
     return render(request, 'main/detail.html', context)
 # Помимо самой публикации, которую мы помещаем в переменную bb контекста шаблона, также готовим перечень
 # связанных с ним дополнительных иллюстраций, записав его в переменную ais
@@ -225,7 +244,34 @@ def profile_bb_add(request):
             return render(request, 'main/profile_bb_add.html', context)
 
 
+@login_required
+def profile_bb_change(request, pk):
+    bb = get_object_or_404(Bb, pk=pk)
+    if request.method == 'POST':
+        form = BbForm(request.POST, request.FILES, instance=bb)
+        if form.is_valid():
+            bb = form.save()
+            formset = AIFormSet(request.POST, request.FILES, instance=bb)
+            if formset.is_valid():
+                formset.save()
+                messages.add_message(request, messages.SUCCESS, 'Объявление исправлено')
+                return redirect('main:profile')
+    else:
+        form = BbForm(instance=bb)
+        formset = AIFormSet(instance=bb)
+    context = {'form': form, 'formset': formset}
+    return render(request, 'main/profile_bb_change.', context)
 
+@login_required
+def profile_bb_delete(request, pk):
+    bb = get_object_or_404(Bb, pk=pk)
+    if request.method == 'POST':
+        bb.delete()
+        messages.add_message(request, messages.SUCCESS, 'Объявление удалено')
+        return redirect('main:profile')
+    else:
+        context = {'bb':bb}
+        return render(request, 'main/profile_bb_delete.html', context)
 
 # Create your views here.
 #

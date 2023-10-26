@@ -6,6 +6,8 @@ from .apps import user_registered
 from .models import SuperRubric, SubRubric
 from django.forms import inlineformset_factory
 from .models import Bb, AdditionalImage
+from captcha.fields import CaptchaField
+from .models import Comment
 
 # Форма 
 class ChangeUserInfoForm(forms.ModelForm):
@@ -102,4 +104,23 @@ class BbForm(forms.ModelForm):
 AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')
 
 
+# Форма Комментариев оставленных зарегистрированными пользователями
+class UserCommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        exclude = ('is_active',)
+        widgets = {'bb': forms.HiddenInput}
+        
+        """  Поле is_active (признак будет ли комментарий выводится на странице) уберём из форм,
+        поскольку оно требуется лишь администрации сайта. У поля bb, хранящего ключ объявления, с которым 
+        связан комментарий, укажем в качестве элемента управления скрытое поле 
+        """
 
+# Форма Комментариев оставленных Незарегистрированными пользователями сайта (Гостями)
+class GuestCommentForm(forms.ModelForm):
+    captcha = CaptchaField(label= 'Введите текст с картинки', error_messages={'invalid': 'Неправильный текст'})
+    
+    class Meta:
+        model = Comment
+        exclude = ('is_active',)
+        widgets = {'bb': forms.HiddenInput}
