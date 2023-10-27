@@ -81,7 +81,7 @@ INSTALLED_APPS = [
     'captcha',
     'rest_framework',
     'corsheaders',
-    'api.apps.ApiConf',
+    'api.apps.ApiConfig',
 ]
     
 
