@@ -139,6 +139,7 @@ from django.db.models.signals import post_save
 
 from .utilities import get_timestamp_path, send_new_comment_notification
 
+# Модель пользователя
 class AdvUser(AbstractUser):
     is_activated = models.BooleanField(default=True, db_index=True,
                                        verbose_name='Прошел активацию?')

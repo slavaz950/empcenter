@@ -25,7 +25,9 @@
 <!-- <   -->
                 <ul class="col nav justify-content-end border">
                     <li class="nav-item"><a class="nav-link" href="{% url 'main:register' %}">Регистрация</a></li>
-                    {% if user.is_authenticated %}
+
+                    {% if user.is_authenticated %}  <!-- Если пользователь авторизован на сайте   -->
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown"
                         href="#" role="button" aria-haspopup="true" aria-expanded="false">Профиль</a>
@@ -40,9 +42,12 @@
                            <a class="dropdown-item" href="#">Удалить</a>
                         </div>
                     </li>
-                    {% else %}
+
+                    {% else %} <!-- Иначе если "Гость"  -->
+
                     <li class="nav-item"><a class="nav-link" 
                         href="{% url 'main:login' %}">Вход </a></li>
+                        
                     {% endif %}
                 </ul></div>
                     <div class="row">
