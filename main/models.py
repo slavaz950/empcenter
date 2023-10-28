@@ -145,6 +145,7 @@ class AdvUser(AbstractUser):
     send_messages = models.BooleanField(default=True,
                   verbose_name='Слать оповещения о новых комментариях?')
 
+# При удалении пользователя удаляются оставленные им обявления
     def delete(self, *args, **kwargs):
         for bb in self.bb_set.all():
             bb.delete()
@@ -153,6 +154,8 @@ class AdvUser(AbstractUser):
     class Meta(AbstractUser.Meta):
         pass
 
+
+# Класс модели Rubric в которой хранятся надрубрики и подрубрики
 class Rubric(models.Model):
     name = models.CharField(max_length=20, db_index=True, unique=True,
                             verbose_name='Название')
@@ -160,11 +163,14 @@ class Rubric(models.Model):
                                      verbose_name='Порядок')
     super_rubric = models.ForeignKey('SuperRubric', on_delete=models.PROTECT,
                    null=True, blank=True, verbose_name='Надрубрика')
+    # Мы не задаём никаких параметров самой модели - поскольку пользователи не будут работать с ней непосредственно
+    # здесь это лишнее.
 
 class SuperRubricManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(super_rubric__isnull=True)
 
+# Диспетчер записей SuperRubri
 class SuperRubric(Rubric):
     objects = SuperRubricManager()
 
@@ -177,10 +183,13 @@ class SuperRubric(Rubric):
         verbose_name = 'Надрубрика'
         verbose_name_plural = 'Надрубрики'
 
+
+# Диспетчер записей SubRubric (Подрубрики)
 class SubRubricManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(super_rubric__isnull=False)
 
+# Модель подрубрик SubRubric 
 class SubRubric(Rubric):
     objects = SubRubricManager()
     def __str__(self):
@@ -193,6 +202,8 @@ class SubRubric(Rubric):
         verbose_name = 'Подрубрика'
         verbose_name_plural = 'Подрубрики'
 
+
+# Модель хранящая публикации
 class Bb(models.Model):
     rubric = models.ForeignKey(SubRubric, on_delete=models.PROTECT,
                                           verbose_name='Рубрика')
@@ -209,6 +220,13 @@ class Bb(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, db_index=True,
                                       verbose_name='Опубликовано')
 
+
+    """
+    В переопределённом методе delete() перед удалением текущей записи мы перебираем и
+    вызовом метода delete() удаляем все связанные дополнительные иллюстрации. При вызове метода delete()
+    возникает сигнал post_delete, обрабатываемый приложением django_cleanup, которое в ответ удалит все файлы,
+    хранящиеся в удалённой записи.
+    """
     def delete(self, *args, **kwargs):
         for ai in self.additionalimage_set.all():
             ai.delete()
@@ -219,6 +237,7 @@ class Bb(models.Model):
         verbose_name = 'Объявление'
         ordering = ['-created_at']
 
+# Модель дополнительных иллюстраций в объявлении
 class AdditionalImage(models.Model):
     bb = models.ForeignKey(Bb, on_delete=models.CASCADE,
                            verbose_name='Объявление')
@@ -229,6 +248,8 @@ class AdditionalImage(models.Model):
         verbose_name_plural = 'Дополнительные иллюстрации'
         verbose_name = 'Дополнительная иллюстрация'
 
+
+# Модель комментариев
 class Comment(models.Model):
     bb = models.ForeignKey(Bb, on_delete=models.CASCADE,
                                verbose_name='Объявление')

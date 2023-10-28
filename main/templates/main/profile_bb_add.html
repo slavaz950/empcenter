@@ -1,6 +1,7 @@
-{% extend "layout/basic.html" %}
+{% extends "layout/basic.html" %}
 
 {% load bootstrap4 %}
+
 
 {% block content %}
 <h2>Добавление объявления</h2>
@@ -12,6 +13,7 @@
     {% bootstrap_form form layout='horizontal' %}
     {% bootstrap_formset formset layout='horizontal' %}
     <!--  Набор форм выведем с помощью тега шаблонизатора bootstrap_formset -->
-    {% buttons submit='Добавить' %}{% endbutton %}
+    {% buttons submit='Добавить' %}
+    {% endbuttons %}
 </form>
 {% endblock %}
