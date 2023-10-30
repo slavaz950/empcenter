@@ -31,23 +31,23 @@ from .views import index, other_page, BBLoginView, profile, BBLogoutView, \
 app_name = 'main'
 urlpatterns = [
     path('accounts/register/activate/<str:sign>/', user_activate,
-                                                   name='register_activate'),    #
+                                                   name='register_activate'),  # Страница активации пользователя
     
     path('accounts/register/done/', RegisterDoneView.as_view(),
-                                    name='register_done'),   #
+                                    name='register_done'),   # Сообщение об успешной активации
     
-    path('accounts/register/', RegisterUserView.as_view(),name='register'),   #
+    path('accounts/register/', RegisterUserView.as_view(),name='register'),   # Страница регистрации пользователя
     
     path('accounts/logout/', BBLogoutView.as_view(), name='logout'),   # Страница выхода
     
     path('accounts/password/change/', BBPasswordChangeView.as_view(),
-                                      name='password_change'),   #
+                                      name='password_change'),   #  Страница смены пароля
     
     path('accounts/profile/delete/', DeleteUserView.as_view(),
-                                     name='profile_delete'),    #
+                                     name='profile_delete'),    # Страница удаления пользователя
     
     path('accounts/profile/change/', ChangeUserInfoView.as_view(),
-                                     name='profile_change'),   #
+                                     name='profile_change'),   #  Страница правки основных данных
     
     path('accounts/profile/change/<int:pk>/', profile_bb_change,
                                               name='profile_bb_change'),   #

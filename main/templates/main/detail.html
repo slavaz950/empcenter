@@ -1,5 +1,7 @@
 {% extends "layout/basic.html" %}
 
+{% load bootstrap4 %}
+
 {% block title %} {{ bb.title }} - {{ bb.rubric.name }} {% endblock %}
 
 {% block content %}
@@ -47,7 +49,9 @@ mt-5  - большой внешний отступ сверху, чтобы от
     <div>
         <img class="additional-image" src="{{ ai.image.url }}">
     </div>
-    {% endif %}
+   {% endfor %}
+</div>
+{% endif %}
     <p><a href="{% url 'main:by_rubric' pk=bb.rubric.pk %}{{ all }}">Назад</a></p>
 
 <!-- Блок с коментариями  -->
@@ -68,5 +72,5 @@ mt-5  - большой внешний отступ сверху, чтобы от
     {% endfor %}
 </div>
 {% endif %}
- {% endblock %}
+{% endblock %}
         

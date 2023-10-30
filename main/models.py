@@ -167,11 +167,12 @@ class Rubric(models.Model):
     # Мы не задаём никаких параметров самой модели - поскольку пользователи не будут работать с ней непосредственно
     # здесь это лишнее.
 
+# Диспетчер записей SuperRubriс
 class SuperRubricManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(super_rubric__isnull=True)
 
-# Диспетчер записей SuperRubri
+# Класс Модели SuperRubriс
 class SuperRubric(Rubric):
     objects = SuperRubricManager()
 

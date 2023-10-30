@@ -173,16 +173,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIA_URL = '/media/'   # Хранение выгружаемых файлов (Изображения)
 
 THUMBNALL_ALIASES = {
     '': {
         'default': {
             'size': (96,96),  # Масштабирование для миниатюр
-            'crop': 'scale',  # Имя вложенной папки в которой хранятся миниатюры
+            'crop': 'scale',  
         },
     },
 }
+THUMBNAIL_BASEDIR = 'thumbnail'  # Имя вложенной папки в которой хранятся миниатюры
 
 # Разрешение доступа к веб-службе (API) с любого домена
 CORS_ORIGIN_ALLOW_ALL = True

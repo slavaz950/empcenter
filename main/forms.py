@@ -9,6 +9,8 @@ from .models import AdvUser, SuperRubric, SubRubric, Bb, AdditionalImage, \
     Comment
 from .apps import user_registered
 
+
+# Форма для ввода основных данных
 class ChangeUserInfoForm(forms.ModelForm):
     email = forms.EmailField(required=True, label='Адрес электронной почты')
 
@@ -17,6 +19,7 @@ class ChangeUserInfoForm(forms.ModelForm):
         fields = ('username', 'email', 'first_name', 'last_name',
                   'send_messages')
 
+# Форма для занесения сведений о новом пользователе
 class RegisterUserForm(forms.ModelForm):
     email = forms.EmailField(required=True, label='Адрес электронной почты')
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput,
