@@ -86,7 +86,6 @@ class BbForm(forms.ModelForm):
         fields = '__all__'
         widgets = {'author': forms.HiddenInput}
 
-
 # Встроенный набор форм  AIFormSe связанный с моделью AdditionalImage в которые будут заноситься 
  # дополнительные иллюстрации 
 AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')

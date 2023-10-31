@@ -195,16 +195,16 @@ def detail(request, rubric_pk, pk):
     context = {'bb': bb, 'ais': ais, 'comments': comments, 'form': form}
     return render(request, 'main/detail.html', context)
 
-@login_required
-def profile_bb_detail(request, pk):
+@login_required # только зарегистрированным пользователям
+def profile_bb_detail(request, pk):  # вывод страницы сведений о публикации 
     bb = get_object_or_404(Bb, pk=pk)
     ais = bb.additionalimage_set.all()
     comments = Comment.objects.filter(bb=pk, is_active=True)
     context = {'bb': bb, 'ais': ais, 'comments': comments}
     return render(request, 'main/profile_bb_detail.html', context)
 
-@login_required
-def profile_bb_add(request):
+@login_required  # только зарегистрированным пользователям
+def profile_bb_add(request): # Добавление публикации
     if request.method == 'POST':
         form = BbForm(request.POST, request.FILES)
         if form.is_valid():
@@ -221,8 +221,8 @@ def profile_bb_add(request):
     context = {'form': form, 'formset': formset}
     return render(request, 'main/profile_bb_add.html', context)
 
-@login_required
-def profile_bb_change(request, pk):
+@login_required  #  только зарегистрированным пользователям
+def profile_bb_change(request, pk):  # Исправление публикации
     bb = get_object_or_404(Bb, pk=pk)
     if request.method == 'POST':
         form = BbForm(request.POST, request.FILES, instance=bb)
@@ -240,8 +240,8 @@ def profile_bb_change(request, pk):
     context = {'form': form, 'formset': formset}
     return render(request, 'main/profile_bb_change.html', context)
 
-@login_required
-def profile_bb_delete(request, pk):
+@login_required  # только зарегистрированным пользователям
+def profile_bb_delete(request, pk): # Удаление публикации
     bb = get_object_or_404(Bb, pk=pk)
     if request.method == 'POST':
         bb.delete()
