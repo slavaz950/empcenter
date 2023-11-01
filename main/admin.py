@@ -89,7 +89,7 @@ class BbAdmin(admin.ModelAdmin):
 
 admin.site.register(Bb, BbAdmin)
 
-#
+# Редактор для модели Comment
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('author', 'content', 'created_at', 'is_active')
     list_display_links = ('author', 'content')
