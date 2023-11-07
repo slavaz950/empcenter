@@ -80,11 +80,11 @@ admin.site.register(SubRubric, SubRubricAdmin)
 class AdditionalImageInline(admin.TabularInline):
     model = AdditionalImage
 
-# Редактор объявлений в АдминПанели
+# Редактор объявлений в АдминПанели (+)
 class BbAdmin(admin.ModelAdmin):
     list_display = ('rubric', 'title', 'content', 'author', 'created_at')
-    fields = (('rubric', 'author'), 'title', 'content', 'price',
-              'contacts', 'image', 'is_active')
+    fields = (('rubric', 'author'), 'title', 'content', 'image','schedule','education','experience','empoloyment_area',
+                'salary_from','salary_up_to','telephone','email','is_active' )
     inlines = (AdditionalImageInline,)
 
 admin.site.register(Bb, BbAdmin)

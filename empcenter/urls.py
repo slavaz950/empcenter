@@ -13,6 +13,16 @@ urlpatterns = [
     path ('accounts', include("django.contrib.auth.urls"))  # from video
 ]
 
+"""
+    Если вдруг изображения не будут выводится (ошибка отсутствия страницы или тп)
+    раскоментировать этот фрагмент
+    
+    + static(setting.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
+    эта строка используется для управления любыми медиафайлами (изображения, видео) на сайте
+"""
+ 
+ 
  
 if settings.DEBUG:
     urlpatterns.append(path('static/<path:path>', never_cache(serve)))

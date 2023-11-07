@@ -15,6 +15,8 @@ from django.urls import reverse_lazy
 from django.core.mail.backends.smtp import EmailBackend
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Основная директория проекта
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -25,6 +27,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'v8p7m8qq23*8cr(ivlh203$1kjn$niz6gdu$33u3wm!-8qi*0m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# Включение/выключение  режима DEBUG. 
+# После публикации проекта необходимо поставить  False
 # ПРЕДУПРЕЖДЕНИЕ БЕЗОПАСНОСТИ: не запускайте с включенной отладкой в рабочей среде.
 DEBUG = True    # #     True   False 
 
@@ -101,7 +105,8 @@ ROOT_URLCONF = 'empcenter.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [],  #  Указываем все места где нужно искать шаблоны
+        # Пример 'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,15 +124,24 @@ TEMPLATES = [
 WSGI_APPLICATION = 'empcenter.wsgi.application'
 
 
-# Database
+# Настройки подключения к БД
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'empcenter.data'),
-    }
+        'ENGINE': 'django.db.backends.postgresql',  # Драйвер (адаптер) 
+        'NAME': 'empcenterdb', # Имя Базы Данных
+        'USER': 'postgres', # Пользователь БД 
+        'PASSWORD': 'cen78ter19', # Пароль пользователя БД
+        'HOST': 'localhost',  # Местоположение БД
+        'PORT': '5432', 
+     }
 }
+"""
+#Стандартные настройки БД
+  'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'empcenter.data'), }  
+"""
 
 AUTH_USER_MODEL = 'main.AdvUser'
 
@@ -173,7 +187,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 MEDIA_URL = '/media/'   # Хранение выгружаемых файлов (Изображения)
+"""
+  Эта строка отвечает за то что выводится в адресной строке браузера
+  можно изменить например
+   MEDIA_URL = '/employ_media/' 
+"""
 
 THUMBNALL_ALIASES = {
     '': {
@@ -188,3 +208,4 @@ THUMBNAIL_BASEDIR = 'thumbnail'  # Имя вложенной папки в ко�
 # Разрешение доступа к веб-службе (API) с любого домена
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'

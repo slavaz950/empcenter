@@ -7,7 +7,7 @@ from .utilities import send_activation_notification
 
 class MainConfig(AppConfig):
     name = 'main'
-    verbose_name = 'Доска объявлений'
+    verbose_name = 'Центр занятости'
 
 #user_registered = Signal(providing_args=['instance'])
 user_registered = Signal('instance') 
