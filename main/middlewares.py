@@ -1,8 +1,11 @@
-from .models import SubRubric
+from .models import SubRubric, SuperRubric  # Добавил SuperRubric
 
 def empcenter_context_processor(request):
     context = {}
-    context['rubrics'] = SubRubric.objects.all()
+    
+    context['super_rubrics'] = SuperRubric.objects.all() # Добавил строку (переменная для Надрубрик)
+    context['rubrics'] = SubRubric.objects.all() # Строка была задана изначально (переменная для Подрубрик)
+    
     context['keyword'] = ''
     context['all'] = ''
     if 'keyword' in request.GET:

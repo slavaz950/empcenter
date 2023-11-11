@@ -93,13 +93,20 @@ class SuperRubric(Rubric):
 # Диспетчер записей SubRubric (Подрубрики)
 class SubRubricManager(models.Manager):
     def get_queryset(self):
+       # return super().get_queryset().filter(super_rubric__isnull=False)
+        #return super().get_queryset().filter(super_rubric__isnull=False)
         return super().get_queryset().filter(super_rubric__isnull=False)
 
 # Модель подрубрик SubRubric 
 class SubRubric(Rubric):
+    
+    SuperRubricManager
     objects = SubRubricManager()
+    #objects = SuperRubricManager()
+    
     def __str__(self):
-        return '%s - %s' % (self.super_rubric.name, self.name)
+         return '%s - %s' % (self.super_rubric.name, self.name)
+       
 
     class Meta:
         proxy = True
@@ -112,10 +119,6 @@ class SubRubric(Rubric):
 # Модель хранящая публикации
 class Bb(models.Model):
     
-    # ОПРЕДЕЛИТЬСЯ С НЕОБХОДИМОСТЬЮ ДАННОЙ ФУНКЦИИ (Она эксперементальная)
-    def setup1(self, request, *args, **kwargs):
-        self.em_user = request.user.pk
-        return super().setup(request, *args, **kwargs)
 
     SCHEDULE_CHOICE = (
     ('FE', 'Полная занятость'),
@@ -134,8 +137,10 @@ class Bb(models.Model):
     ('VO', 'Высшее (ВО)'),
     )
 
-    rubric = models.ForeignKey(SubRubric, on_delete=models.PROTECT,
-                                          verbose_name='Категория')
+
+   
+    
+    rubric = models.ForeignKey(SubRubric, on_delete=models.PROTECT,verbose_name='Категория')
     title = models.CharField(max_length=100, verbose_name='Должность')
     #price = models.FloatField(default=0, verbose_name='Цена')
     #contacts = models.TextField(verbose_name='Контакты')
