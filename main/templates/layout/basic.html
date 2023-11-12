@@ -21,7 +21,7 @@
 <!-- stycky-top  "Приклеивает" навигационную панель к верхней части страницы (иначе НавПанель пропадает при пролистывании)   -->
 <!-- bg-primary   цвет фона навигационной модели  (primary - синий )   -->
 <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-primary pb-1 pt-1"><!-- Основные настройки отображения панели  -->
-    <a class="navbar-brand" href="{% url 'main:index' %}">Центр занятости</a>  <!-- Логотип сайта  -->
+    <a class="navbar-brand pl-5" href="{% url 'main:index' %}">Центр занятости</a>  <!-- Логотип сайта  -->
 
 <!-- кнопка управления панелью на узких экранах  -->
 <button class="navbar-toggler">
@@ -153,13 +153,13 @@
 
     <!-- pl-3  отступ слева на 3 единицы (padding left (pl))  -->
     <!-- pt-5   отступ сверху на 5 единиц (padding top (pd))    -->
-                        <nav class="col-md-auto nav flex-column border ">
+                        <nav class="col-md-auto nav flex-column border pl-4">
                             <a class="nav-link root pt-15" href="{% url 'main:index' %}">Главная</a>
                             <span class="nav-link root font-weight-bold">Выделенный заголовок</span>
 
                             {% for rubric in rubrics %} 
                             {% ifchanged rubric.super_rubric.pk %}
-                            <span class="nav-link root-weight-bold">
+                            <span class="nav-link root font-weight-bold">
                                 {{ rubric.super_rubric.name }}</span>
                                 {% endifchanged %} 
                                 <a class="nav-link" href="{% url 'main:by_rubric' pk=rubric.pk %}">
