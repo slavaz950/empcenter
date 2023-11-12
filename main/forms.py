@@ -14,10 +14,10 @@ from .apps import user_registered
 class ChangeUserInfoForm(forms.ModelForm):
     email = forms.EmailField(required=True, label='Адрес электронной почты')
 
+# Вложеный класс Meta внутри которого указываем характеристики для нашего целевого класса ChangeUserInfoForm
     class Meta:
-        model = AdvUser
-        fields = ('username', 'email', 'first_name', 'last_name',
-                  'send_messages')
+        model = AdvUser # Указываем модель с которой работаем 
+        fields = ('username', 'email', 'first_name', 'last_name','send_messages') # Какие поля должны быть выведены внутри формы
 
 # Форма для занесения сведений о новом пользователе
 class RegisterUserForm(forms.ModelForm):
@@ -27,6 +27,11 @@ class RegisterUserForm(forms.ModelForm):
     password2 = forms.CharField(label='Пароль (повторно)',
       widget=forms.PasswordInput,
       help_text='Введите тот же самый пароль еще раз для проверки')
+    
+    account_add_vacancy = forms.BooleanField(label='Добавление вакансий',
+                  help_text='Если вы планируете использовать учётную запись на сайте для добавления вакансий, Вам необходимо выбрать этот пункт. Как правило это учётная запись для работодателей.')
+    account_add_resume = forms.BooleanField(label='Добавление резюме',
+                  help_text='Аккаунт для добавления резюме (поиск работы)')
 
     def clean_password1(self):
         password1 = self.cleaned_data['password1']
@@ -55,7 +60,8 @@ class RegisterUserForm(forms.ModelForm):
 
     class Meta:
         model = AdvUser
-        fields = ('username', 'email', 'password1', 'password2',
+        fields = ('account_add_vacancy', 
+                  'account_add_resume','username', 'email', 'password1', 'password2',
                   'first_name', 'last_name', 'send_messages')
 
 

@@ -16,9 +16,9 @@ from .utilities import get_timestamp_path, send_new_comment_notification
 class AdvUser(AbstractUser):
     is_activated = models.BooleanField(default=True, db_index=True,
                                        verbose_name='Прошел активацию?')
-    account_add_vacancy = models.BooleanField(default=True,
+    account_add_vacancy = models.BooleanField(default=False,
                   verbose_name='Аккаунт для добавления вакансии (для работодателей)')
-    account_add_resume = models.BooleanField(default=True,
+    account_add_resume = models.BooleanField(default=False,
                   verbose_name='Аккаунт для добавления резюме (поиск работы)')
     send_messages = models.BooleanField(default=True,
                   verbose_name='Слать оповещения о новых комментариях?')              
