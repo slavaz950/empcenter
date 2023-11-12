@@ -93,9 +93,7 @@ class SuperRubric(Rubric):
 # Диспетчер записей SubRubric (Подрубрики)
 class SubRubricManager(models.Manager):
     def get_queryset(self):
-       # return super().get_queryset().filter(super_rubric__isnull=False)
-        #return super().get_queryset().filter(super_rubric__isnull=False)
-        return super().get_queryset().filter(super_rubric__isnull=False)
+       return super().get_queryset().filter(super_rubric__isnull=False)
 
 # Модель подрубрик SubRubric 
 class SubRubric(Rubric):

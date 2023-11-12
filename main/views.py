@@ -108,6 +108,11 @@ def user_activate(request, sign):
         template = 'main/activation_done.html'
         user.is_active = True
         user.is_activated = True
+        #  СЮДА ПИШЕМ УСЛОВИЕ
+         # Если user.account_add_vacancy:
+          #  Пользователь относится к группе "РАБОТОДАТЕЛИ"
+           #   ИНАЧЕ
+            # 
         user.save()
     return render(request, template)
 
