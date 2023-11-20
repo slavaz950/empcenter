@@ -10,6 +10,11 @@ from .models import AdvUser, SuperRubric, SubRubric, Bb, AdditionalImage, \
 from .apps import user_registered
 
 
+TYPE_ACCOUNT = (
+    ('VAC', 'Вакансии'),
+    ('RES', 'Резюме'),
+    )
+
 # Форма для ввода основных данных
 class ChangeUserInfoForm(forms.ModelForm):
     email = forms.EmailField(required=True, label='Адрес электронной почты')
@@ -21,17 +26,18 @@ class ChangeUserInfoForm(forms.ModelForm):
 
 # Форма для занесения сведений о новом пользователе
 class RegisterUserForm(forms.ModelForm):
+    
+    
+    
     email = forms.EmailField(required=True, label='Адрес электронной почты')
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput,
       help_text=password_validation.password_validators_help_text_html())
     password2 = forms.CharField(label='Пароль (повторно)',
       widget=forms.PasswordInput,
       help_text='Введите тот же самый пароль еще раз для проверки')
+    account_type = forms.ChoiceField(label='Тип учётной записи', choices= TYPE_ACCOUNT ,help_text='Выберите, в какой раздел Вы планируете добавлять информицию.')
     
-    account_add_vacancy = forms.BooleanField(label='Добавление вакансий',
-                  help_text='Если вы планируете использовать учётную запись на сайте для добавления вакансий, Вам необходимо выбрать этот пункт. Как правило это учётная запись для работодателей.')
-    account_add_resume = forms.BooleanField(label='Добавление резюме',
-                  help_text='Аккаунт для добавления резюме (поиск работы)')
+   
 
     def clean_password1(self):
         password1 = self.cleaned_data['password1']
@@ -53,6 +59,12 @@ class RegisterUserForm(forms.ModelForm):
         user.set_password(self.cleaned_data['password1'])
         user.is_active = False # Является ли пользователь активным по умолчанию False
         user.is_activated = False # Выполнил ли пользователь процедуру активации по умолчанию False
+        user.group = 'Пользователь'
+        
+        # УСЛОВИЕ
+        # Если Пользователь выбрал оба вида аккаунтов или не одного выводим сообщение (либо возбуждаем исключение)
+        # " Вы не можете выбрать одновременно как оба вида учётной записи так и не одного."
+        
         if commit:
             user.save()
         user_registered.send(RegisterUserForm, instance=user)
@@ -60,8 +72,8 @@ class RegisterUserForm(forms.ModelForm):
 
     class Meta:
         model = AdvUser
-        fields = ('account_add_vacancy', 
-                  'account_add_resume','username', 'email', 'password1', 'password2',
+        fields = ('account_type', 
+                  'username', 'email', 'password1', 'password2',
                   'first_name', 'last_name', 'send_messages')
 
 
@@ -86,11 +98,32 @@ class SearchForm(forms.Form):
 # В форме будем выводить все поля модели Bb. Для поля автора публикации author зададим  
 # в качестве элемента управления HiddenInput, т.е. скрытое поле - все равно значение туда 
 # будет заноситься программно.
-class BbForm(forms.ModelForm):
+
+class BbForm(forms.ModelForm):  # Связываем модель напрямую с формой
+    
+    # Конструктор прописывается для того чтобы в выпадающем списке на странице (в случае если не выбрано
+    # ни одного значения ) не отображалось "--------"
+    def __init__(self,*args,**kwargs):   # Вызов конструктора
+        super().__init__(*args, **kwargs)  # Вызываем конструктор базового класса
+        self.fields['rubric'].empty_label = 'Категория не выбрана'  # Для поля 'rubric' в случае отсутствия значения
+        # будет отображаться текст - "Категория не выбрана"
+        
     class Meta:
-        model = Bb
-        fields = '__all__'
-        widgets = {'author': forms.HiddenInput}
+        model = Bb # Связываем форму с моделью Bb
+        fields = '__all__'  # Указываем какие поля нужно отобразить в форме (В данном случае это все поля)
+        # Но на практике рекомендуется явно указывать список этих полей
+        
+        widgets = {  # Здесь определяем стили для конкретных полей
+            'author': forms.HiddenInput}
+        
+        """
+        НАПРИМЕР (Задаём стили следующим образом )
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-input'}),
+            'content': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
+        }
+        
+        """
 
 # Встроенный набор форм  AIFormSe связанный с моделью AdditionalImage в которые будут заноситься 
  # дополнительные иллюстрации 

@@ -14,14 +14,34 @@ from .utilities import get_timestamp_path, send_new_comment_notification
 
 
 class AdvUser(AbstractUser):
+    
+    TYPE_ACCOUNT = (
+    ('VAC', 'Вакансии'),
+    ('RES', 'Резюме'),
+    )
+    
+    
     is_activated = models.BooleanField(default=True, db_index=True,
                                        verbose_name='Прошел активацию?')
+    
+    
+    """
     account_add_vacancy = models.BooleanField(default=False,
                   verbose_name='Аккаунт для добавления вакансии (для работодателей)')
     account_add_resume = models.BooleanField(default=False,
                   verbose_name='Аккаунт для добавления резюме (поиск работы)')
+    """
+    
+    
     send_messages = models.BooleanField(default=True,
-                  verbose_name='Слать оповещения о новых комментариях?')              
+                  verbose_name='Слать оповещения о новых комментариях?') 
+    
+    account_type = models.CharField(max_length=40, default='RES', 
+	choices = TYPE_ACCOUNT, verbose_name='Тип учётной записи')
+    
+    
+      
+    # Добавляем поле "Группа" (Группа доступа) значение по умолчанию "Пользователь"           
 
 # При удалении пользователя удаляются оставленные им обявления
     def delete(self, *args, **kwargs):
@@ -79,9 +99,12 @@ class SuperRubricManager(models.Manager):
 # Класс Модели SuperRubriс
 class SuperRubric(Rubric):
     objects = SuperRubricManager()
-
-    def __str__(self):
-        return self.name
+    
+# Для того чтобы получить "красивый" вывод информации. Используем метод  __str__ . В этом методе указываем какая именно информация будет выводится 
+    def __str__(self):  # когда мы будем выводить этот объект
+        return self.name   # 
+    # Можно отформатировать строку и написать следующее
+    # return f'Имя:  {self.name}'
 
     class Meta:
         proxy = True
@@ -136,7 +159,7 @@ class Bb(models.Model):
     )
 
 
-   
+   # user_email = 
     
     rubric = models.ForeignKey(SubRubric, on_delete=models.PROTECT,verbose_name='Категория')
     title = models.CharField(max_length=100, verbose_name='Должность')
@@ -164,7 +187,8 @@ class Bb(models.Model):
     
     #email = models.EmailField(default=AdvUser.objects.filter(email=AdvUser.username.pk))
    
-    email = models.EmailField(default='example@mail.ru' ,verbose_name='E-mail')   
+    email = models.EmailField(default='example@mail.ru' ,verbose_name='E-mail')  
+   # email = models.EmailField(default= ,verbose_name='E-mail')  
                               
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE,
                                verbose_name='Автор публикации')

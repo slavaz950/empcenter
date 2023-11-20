@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404 #  HttpResponse позволяет отправить текстовое содержимое
 from django.template import TemplateDoesNotExist
 from django.template.loader import get_template
 from django.contrib.auth.views import LoginView, LogoutView, \
@@ -85,6 +85,8 @@ class BBPasswordChangeView(SuccessMessageMixin, LoginRequiredMixin,
  # Контроллер класса регистрирующий пользователя
 class RegisterUserView(CreateView):
     model = AdvUser
+    
+    
     template_name = 'main/register_user.html'
     form_class = RegisterUserForm
     success_url = reverse_lazy('main:register_done')
