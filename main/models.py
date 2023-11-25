@@ -36,7 +36,7 @@ class AdvUser(AbstractUser):
     send_messages = models.BooleanField(default=True,
                   verbose_name='Слать оповещения о новых комментариях?') 
     
-    account_type = models.CharField(max_length=40, default='RES', 
+    account_type = models.CharField(max_length=100, default='RES', 
 	choices = TYPE_ACCOUNT, verbose_name='Тип учётной записи')
     
     
