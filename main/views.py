@@ -20,7 +20,7 @@ from django.db.models import Q
 
 from .models import AdvUser, SubRubric, Bb, Comment
 from .forms import ChangeUserInfoForm, RegisterUserForm, SearchForm, \
-    BbForm, AIFormSet, UserCommentForm, GuestCommentForm
+    BbForm, AIFormSet, UserCommentForm, GuestCommentForm,BbFormVac,BbFormResume
 from .utilities import signer
 
 # Контроллер для главной страницы
@@ -110,11 +110,6 @@ def user_activate(request, sign):
         template = 'main/activation_done.html'
         user.is_active = True
         user.is_activated = True
-        #  СЮДА ПИШЕМ УСЛОВИЕ
-         # Если user.account_add_vacancy:
-          #  Пользователь относится к группе "РАБОТОДАТЕЛИ"
-           #   ИНАЧЕ
-            # 
         user.save()
     return render(request, template)
 
@@ -210,11 +205,23 @@ def profile_bb_detail(request, pk):  # вывод страницы сведен�
     context = {'bb': bb, 'ais': ais, 'comments': comments}
     return render(request, 'main/profile_bb_detail.html', context)
 
+
+
+
+
 @login_required  # только зарегистрированным пользователям
 def profile_bb_add(request): # Добавление публикации
+   
+    # ПЕРЕДЕЛАННЫЙ КОНТРОЛЛЕР
+    
     if request.method == 'POST':
-        form = BbForm(request.POST, request.FILES)
-        if form.is_valid():
+        if request.user.account_type == 'VAC':
+            form = BbFormVac(request.POST, request.FILES)
+        else: 
+       # request.user.account_type == 'RES':
+         form = BbFormResume(request.POST, request.FILES)
+        
+    if form.is_valid():
             bb = form.save()
             formset = AIFormSet(request.POST, request.FILES, instance=bb)
             if formset.is_valid():

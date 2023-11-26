@@ -140,7 +140,8 @@ class SubRubric(Rubric):
 # Модель хранящая публикации
 class Bb(models.Model):
     
-
+    
+    
     SCHEDULE_CHOICE = (
     ('FE', 'Полная занятость'),
     ('FS', 'Гибкий график'),
@@ -159,7 +160,6 @@ class Bb(models.Model):
     )
 
 
-   # user_email = 
     
     rubric = models.ForeignKey(SubRubric, on_delete=models.PROTECT,verbose_name='Категория')
     title = models.CharField(max_length=100, verbose_name='Должность')
@@ -178,7 +178,7 @@ class Bb(models.Model):
     salary_up_to = models.IntegerField(default='0', verbose_name='Зарплата до') 
     telephone = models.CharField(max_length=40, default='Не указан', verbose_name='Телефон')
     
-    addit_info = models.TextField(verbose_name='Дополнительная информация')  #  
+  #  addit_info = models.TextField(verbose_name='Дополнительная информация')  #  
     account = models.CharField(max_length=40, default='Не указан??????', verbose_name='Тип учётной записи')
     name_contact = models.CharField(max_length=100, default='Не указано', verbose_name='ФИО соискателя')
     organization = models.CharField(max_length=100, default='Не указано', verbose_name='Название организации')
@@ -190,7 +190,7 @@ class Bb(models.Model):
     #email = models.EmailField(default=AdvUser.objects.filter(email=AdvUser.username.pk))
    
     email = models.EmailField(default='example@mail.ru' ,verbose_name='E-mail')  
-   # email = models.EmailField(default= ,verbose_name='E-mail')  
+   # email = models.EmailField(default=request.user.email ,verbose_name='E-mail')  
                               
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE,
                                verbose_name='Автор публикации')
