@@ -178,8 +178,10 @@ class Bb(models.Model):
     salary_up_to = models.IntegerField(default='0', verbose_name='Зарплата до') 
     telephone = models.CharField(max_length=40, default='Не указан', verbose_name='Телефон')
     
-    
-    
+    addit_info = models.TextField(verbose_name='Дополнительная информация')  #  
+    account = models.CharField(max_length=40, default='Не указан??????', verbose_name='Тип учётной записи')
+    name_contact = models.CharField(max_length=100, default='Не указано', verbose_name='ФИО соискателя')
+    organization = models.CharField(max_length=100, default='Не указано', verbose_name='Название организации')
     
     #email = models.EmailField(default=AdvUser.objects.filter(email=user.pk)     ,verbose_name='E-mail')
     

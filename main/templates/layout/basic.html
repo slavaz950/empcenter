@@ -91,11 +91,12 @@
             <div class="dropdown-menu">
 
 
-<!--  Если в АдминПанели для данного пользователя стоит флаг "Сотрудник сайта" 
-выводить пункт меню "АдминПанель"
-
--->
-                 <a class="dropdown-item" href="{%  url 'main:profile' %}">Мои публикации</a>
+<!--  Если в АдминПанели для данного пользователя стоит флаг "Сотрудник сайта" выводить пункт меню "АдминПанель"-->
+        {% if user.is_staff %}
+                <a class="dropdown-item" href="{%  url 'admin:index' %}">АдминПанель</a>
+        {% endif %}
+        
+                <a class="dropdown-item" href="{%  url 'main:profile' %}">Мои публикации</a>
                 <a class="dropdown-item" href="{% url 'main:profile_change' %}">Изменить личные данные</a>
                 <a class="dropdown-item" href="{% url 'main:password_change' %}">Изменить пароль</a>
                 <a class="dropdown-item" href="{% url 'main:profile_delete' %}">Удалить</a>
