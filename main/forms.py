@@ -159,7 +159,11 @@ class BbFormVac(forms.ModelForm):
         
 class Meta:
     model = Bb # Связываем форму с моделью Bb
-    fields = 'all' 
+    #fields = 'all' 
+    fields = ('rubric','title','content','image','schedule','experience','education',
+    'employment_area','salary_from','salary_up_to','telephone','idit_info','email',
+    'name_contact','organization') 
+    
     labels = {'rubric': 'Категория ','title': 'Должность ','content': 'О вакансии ','image': 'Изображение ',
     'schedule': 'График работы ','experience': 'Опыт работы ','education': 'Образование ',
     'employment_area': 'Район трудоустройства ','salary_from': 'Зарплата от ','salary_up_to': 'Зарплата до',
@@ -185,7 +189,7 @@ class Meta:
     widgets = {  
             'author': forms.HiddenInput}
        
-AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='all')
+AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')
 
 
 
@@ -200,7 +204,12 @@ class BbFormResume(forms.ModelForm):
         
 class Meta:
     model = Bb # Связываем форму с моделью Bb
-    fields = 'all' 
+    #fields = 'all'
+    
+    fields = ('rubric','title','content','image','schedule','experience','education',
+    'employment_area','telephone','idit_info','email','name_contact')
+    
+     
     labels = {'rubric': 'Категория ','title': 'Должность ','content': 'О себе ','image': 'Изображение ',
     'schedule': 'График работы ','experience': 'Опыт работы ','education': 'Образование ',
     'employment_area': 'Район трудоустройства ','telephone': 'Телефон ','idit_info': 
@@ -224,7 +233,7 @@ class Meta:
     widgets = {  
             'author': forms.HiddenInput}
        
-AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='all')
+AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')
 
 
 

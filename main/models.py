@@ -160,13 +160,9 @@ class Bb(models.Model):
     )
 
 
-    
     rubric = models.ForeignKey(SubRubric, on_delete=models.PROTECT,verbose_name='Категория')
     title = models.CharField(max_length=100, verbose_name='Должность')
-    #price = models.FloatField(default=0, verbose_name='Цена')
-    #contacts = models.TextField(verbose_name='Контакты')
     content = models.TextField(verbose_name='Описание')  #  (Описание) О вакансии / О себе
-    #description = models.TextField(verbose_name='Описание')  #  (Описание) О вакансии / О себе
     image = models.ImageField(blank=True, upload_to=get_timestamp_path,
                               verbose_name='Изображение')
                               
@@ -177,21 +173,11 @@ class Bb(models.Model):
     salary_from = models.IntegerField(default='0', verbose_name='Зарплата от')                         
     salary_up_to = models.IntegerField(default='0', verbose_name='Зарплата до') 
     telephone = models.CharField(max_length=40, default='Не указан', verbose_name='Телефон')
-    
-  #  addit_info = models.TextField(verbose_name='Дополнительная информация')  #  
+    #addit_info = models.TextField(verbose_name='Дополнительная информация')  #  
     account = models.CharField(max_length=40, default='Не указан??????', verbose_name='Тип учётной записи')
     name_contact = models.CharField(max_length=100, default='Не указано', verbose_name='ФИО соискателя')
     organization = models.CharField(max_length=100, default='Не указано', verbose_name='Название организации')
-    
-    #email = models.EmailField(default=AdvUser.objects.filter(email=user.pk)     ,verbose_name='E-mail')
-    
-    #email = models.EmailField(default=AdvUser.objects.filter(email=AdvUser.email.pk)    ,verbose_name='E-mail')
-    
-    #email = models.EmailField(default=AdvUser.objects.filter(email=AdvUser.username.pk))
-   
     email = models.EmailField(default='example@mail.ru' ,verbose_name='E-mail')  
-   # email = models.EmailField(default=request.user.email ,verbose_name='E-mail')  
-                              
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE,
                                verbose_name='Автор публикации')
     is_active = models.BooleanField(default=True, db_index=True,
