@@ -93,61 +93,6 @@ class SearchForm(forms.Form):
     keyword = forms.CharField(required=False, max_length=20, label='')
     
     
-    
-    
-    
-    
-    
-    
-    
-    """  
-    
- # ПРЕЖНИЙ ВАРИАНТ КОНТРОЛЛЕРА ФОРМ   
-    
-# Форма для ввода публикации, связанная с моделью Bb
-
-# В форме будем выводить все поля модели Bb. Для поля автора публикации author зададим  
-# в качестве элемента управления HiddenInput, т.е. скрытое поле - все равно значение туда 
-# будет заноситься программно.
-
-class BbForm(forms.ModelForm):  # Связываем модель напрямую с формой
-   
-   
-   # g=AdvUser.account_type
-    g = AdvUser.objects.all()
-    print(g)
-    
-    # Конструктор прописывается для того чтобы в выпадающем списке на странице (в случае если не выбрано
-    # ни одного значения ) не отображалось "--------"
-    def __init__(self,*args,**kwargs):   # Вызов конструктора
-        super().__init__(*args, **kwargs)  # Вызываем конструктор базового класса
-        self.fields['rubric'].empty_label = 'Категория не выбрана'  # Для поля 'rubric' в случае отсутствия значения
-        # будет отображаться текст - "Категория не выбрана"
-        
-    class Meta:
-        model = Bb # Связываем форму с моделью Bb
-        fields = '__all__'  # Указываем какие поля нужно отобразить в форме (В данном случае это все поля)
-        # Но на практике рекомендуется явно указывать список этих полей
-        
-        widgets = {  # Здесь определяем стили для конкретных полей
-            'author': forms.HiddenInput}
-        """
-    """
-         НАПРИМЕР (Задаём стили следующим образом )
-        widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-input'}),
-            'content': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
-        }
-        
-         """
-    """
-
-# Встроенный набор форм  AIFormSe связанный с моделью AdditionalImage в которые будут заноситься 
- # дополнительные иллюстрации 
-AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')
-
-"""
-
 
 # ФОРМА ДЛЯ ДОБАВЛЕНИЯ ВАКАНСИИ
 class BbFormVac(forms.ModelForm):  
@@ -189,7 +134,7 @@ class Meta:
     widgets = {  
             'author': forms.HiddenInput}
        
-AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')
+AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields=('bb','image'))
 
 
 
@@ -233,7 +178,8 @@ class Meta:
     widgets = {  
             'author': forms.HiddenInput}
        
-AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')
+#AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')
+AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields=('bb','image'))
 
 
 

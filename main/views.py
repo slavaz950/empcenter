@@ -221,7 +221,7 @@ def profile_bb_add(request): # Добавление публикации
        # request.user.account_type == 'RES':
          form = BbFormResume(request.POST, request.FILES)
         
-    if form.is_valid():
+        if form.is_valid():
             bb = form.save()
             formset = AIFormSet(request.POST, request.FILES, instance=bb)
             if formset.is_valid():
@@ -231,14 +231,21 @@ def profile_bb_add(request): # Добавление публикации
                 return redirect('main:profile')
     else:
         
+        
         if request.user.account_type == 'VAC':
-            form = BbFormVac(initial={'author': request.user.pk})
+            form = BbFormVac(initial={'author': request.user.pk })  # ,'email': request.email.pk
+            formset = AIFormSet()
+            context = {'form': form, 'formset': formset}
+            
+            
         else: 
        # request.user.account_type == 'RES':
-         form = BbFormResume(initial={'author': request.user.pk})
+         form = BbFormResume(initial={'author': request.user.pk})   # ,'email': request.email.pk
         # form = BbForm(initial={'author': request.user.pk})
         formset = AIFormSet()
     context = {'form': form, 'formset': formset}
+    
+   
     return render(request, 'main/profile_bb_add.html', context)
 
 @login_required  #  только зарегистрированным пользователям
