@@ -213,40 +213,50 @@ def profile_bb_detail(request, pk):  # вывод страницы сведен�
 def profile_bb_add(request): # Добавление публикации
    
     # ПЕРЕДЕЛАННЫЙ КОНТРОЛЛЕР
-    
     if request.method == 'POST':
         if request.user.account_type == 'VAC':
-            form = BbFormVac(request.POST, request.FILES)
-        else: 
-       # request.user.account_type == 'RES':
-         form = BbFormResume(request.POST, request.FILES)
         
-        if form.is_valid():
-            bb = form.save()
+            form = BbFormVac(request.POST, request.FILES)
+        
+            if form.is_valid():
+                bb = form.save()
             formset = AIFormSet(request.POST, request.FILES, instance=bb)
             if formset.is_valid():
                 formset.save()
                 messages.add_message(request, messages.SUCCESS,
                                      'Объявление добавлено')
                 return redirect('main:profile')
-    else:
-        
-        
-        if request.user.account_type == 'VAC':
-            form = BbFormVac(initial={'author': request.user.pk })  # ,'email': request.email.pk
-            formset = AIFormSet()
+            else:
+                form = BbFormVac(initial={'author': request.user.pk })  # ,'email': request.email.pk
+            formset1 = AIFormSet()
             context = {'form': form, 'formset': formset}
-            
-            
-        else: 
-       # request.user.account_type == 'RES':
-         form = BbFormResume(initial={'author': request.user.pk})   # ,'email': request.email.pk
-        # form = BbForm(initial={'author': request.user.pk})
+            return render(request, 'main/profile_bb_add.html', context)
+        
+    else:
+
+        if request.method == 'POST':
+            form = BbFormResume(request.POST, request.FILES)
+            if form.is_valid():
+                bb = form.save()
+            formset = AIFormSet(request.POST, request.FILES, instance=bb)
+            if formset.is_valid():
+                formset.save()
+                messages.add_message(request, messages.SUCCESS,
+                                     'Объявление добавлено')
+                return redirect('main:profile')
+        else:
+          form = BbFormResume(initial={'author': request.user.pk})   # ,'email': request.email.pk
         formset = AIFormSet()
-    context = {'form': form, 'formset': formset}
+        context = {'form': form, 'formset': formset}
     
    
     return render(request, 'main/profile_bb_add.html', context)
+
+
+
+
+
+
 
 @login_required  #  только зарегистрированным пользователям
 def profile_bb_change(request, pk):  # Исправление публикации

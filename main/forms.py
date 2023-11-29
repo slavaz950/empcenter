@@ -134,7 +134,8 @@ class Meta:
     widgets = {  
             'author': forms.HiddenInput}
        
-AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields=('bb','image'))
+#AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields=('bb','image'))
+AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields= '__all__')
 
 
 
@@ -178,8 +179,8 @@ class Meta:
     widgets = {  
             'author': forms.HiddenInput}
        
-#AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')
-AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields=('bb','image'))
+AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')
+#AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='image')  # 'bb',
 
 
 
