@@ -91,102 +91,50 @@ class SubRubricForm(forms.ModelForm):
 # Форма поиска
 class SearchForm(forms.Form):
     keyword = forms.CharField(required=False, max_length=20, label='')
+ 
     
-    
-
-# ФОРМА ДЛЯ ДОБАВЛЕНИЯ ВАКАНСИИ
-class BbFormVac(forms.ModelForm):  
+ # ФОРМА ДЛЯ ДОБАВЛЕНИЯ ПУБЛИКАЦИИ
+class BbForm(forms.ModelForm):
     # Конструктор прописывается для того чтобы в выпадающем списке на странице (в случае если не выбрано
-   def init(self,*args,**kwargs):   
-        super().init(*args, **kwargs)  
-        self.fields['rubric'].empty_label = 'Категория не выбрана'  
-       
+  # def init(self,*args,**kwargs):   
+    # super().init(*args, **kwargs)  
+   #  self.fields['rubric'].empty_label = 'Категория не выбрана'
         
-class Meta:
-    model = Bb # Связываем форму с моделью Bb
-    #fields = 'all' 
-    fields = ('rubric','title','content','image','schedule','experience','education',
-    'employment_area','salary_from','salary_up_to','telephone','idit_info','email',
-    'name_contact','organization') 
+    class Meta:
+            model = Bb
+            #fields = '__all__'
+            fields = ('rubric','title','organization','content','image','schedule','experience','education',
+                 'empoloyment_area','salary_from','salary_up_to','telephone','email',
+                    'name_contact') 
+            #'addit_info',
+            
+            labels = {'rubric': 'Категория ','title': 'Должность ','content': 'О вакансии/ О себе ','image': 'Изображение ',
+                'schedule': 'График работы ','experience': 'Опыт работы ','education': 'Образование ',
+                'empoloyment_area': 'Район трудоустройства ','salary_from': 'Зарплата от ','salary_up_to': 'Зарплата до',
+                'telephone': 'Телефон ','email': 'Электронная почта',
+                'name_contact': 'Контактное лицо','organization': 'Организация'}
+            
+           # ,'addit_info': 'Дополнительная информация '
     
-    labels = {'rubric': 'Категория ','title': 'Должность ','content': 'О вакансии ','image': 'Изображение ',
-    'schedule': 'График работы ','experience': 'Опыт работы ','education': 'Образование ',
-    'employment_area': 'Район трудоустройства ','salary_from': 'Зарплата от ','salary_up_to': 'Зарплата до',
-    'telephone': 'Телефон ','idit_info': 'Дополнительная информация ','email': 'Электронная почта',
-    'name_contact': 'Контактное лицо','organization': 'Организация'}
-    
-    help_texts = {'rubric': 'Укажите категорию в которой хотите разместить Вашу публикацию. ',
-            'title': 'Укажите наименование вакансии (Должность) ',
-            'content': 'Расскажите немного о вакансии, которую вы хотите разместить. ',
+            help_texts = {'rubric': 'Укажите категорию в которой хотите разместить Вашу публикацию. ',
+            'title': 'Укажите Должность) ',
+            'content': 'Расскажите, в зависимости от ситуации о вакансии или о себе. ',
             'image': 'Добавьте изображение (Не обязательно) ',
-            'schedule': 'Укажите график работы для Вашей вакансии. ',
-            'experience': 'выберите из списка значение оптимально подходящее к Вашей вакансии.  ',
-            'education': 'Выберите из списка уровень образования соответствующий Вашей вакансии. ',
-            'employment_area': 'Укажите регион или адрес местонахождения Вашей организации. ',
+            'schedule': 'Выберите из списка график работы. ',
+            'experience': 'выберите из списка оптимальное значение подходящее для Вашего конкретного случая.  ',
+            'education': 'Выберите из списка соответствующий уровень образования . ',
+            'empoloyment_area': 'Укажите регион или адрес местонахождения вакансии. ',
             'salary_from': 'Укажите минимальный уровень заработной платы. ',
             'salary_up_to': 'Укажите максимальный уровень зарплаты (Если такой предел имеется). Иначе оставьте это поле пустым.  ',
-            'telephone': 'Укажите телефон контактного лица. ',
-            'idit_info': 'Здесь можно оставить дополнительную информацию которую Вы не указали в поле "О вакансии". ',
-            'email': 'Укажите адрес электронной почты контактного лица. ',
-            'name_contact': 'Укажите как обращаться к контактному лицу (Фамилия, Имя и т.п..',
-            'organization': 'Укажите название своей организации. '
+            'telephone': 'Укажите телефон для связи. ',
+           # 'addit_info': 'Здесь можно оставить дополнительную информацию которую Вы не указали в поле "Основная информация". ',
+            'email': 'Укажите адрес электронной почты для связи. ',
+            'name_contact': 'Укажите как к Вам можно обращаться (Фамилия, Имя и т.п..)',
+            'organization': 'Если вы публикуете вакансию.Укажите название своей организации. При публикации Резюме это поле заполнять не нужно '
     }
-    widgets = {  
-            'author': forms.HiddenInput}
-       
-#AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields=('bb','image'))
-AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields= '__all__')
-
-
-
-
-# ФОРМА ДЛЯ ДОБАВЛЕНИЯ РЕЗЮМЕ
-class BbFormResume(forms.ModelForm):  
-    # Конструктор прописывается для того чтобы в выпадающем списке на странице (в случае если не выбрано
-   def init(self,*args,**kwargs):   
-        super().init(*args, **kwargs)  
-        self.fields['rubric'].empty_label = 'Категория не выбрана'  
-       
+            widgets = {'author': forms.HiddenInput} # Делаем поле скрытым (значение передаётся автоматически)
         
-class Meta:
-    model = Bb # Связываем форму с моделью Bb
-    #fields = 'all'
-    
-    fields = ('rubric','title','content','image','schedule','experience','education',
-    'employment_area','telephone','idit_info','email','name_contact')
-    
-     
-    labels = {'rubric': 'Категория ','title': 'Должность ','content': 'О себе ','image': 'Изображение ',
-    'schedule': 'График работы ','experience': 'Опыт работы ','education': 'Образование ',
-    'employment_area': 'Район трудоустройства ','telephone': 'Телефон ','idit_info': 
-    'Дополнительная информация ','email': 'Электронная почта','name_contact': 'Контактное лицо'}
-    
-    help_texts = {'rubric': 'Укажите категорию в которой хотите разместить Вашу публикацию. ',
-            'title': 'Укажите наименование должности, которую Вы планируете получить. ',
-            'content': 'Расскажите немного о себе. ',
-            'image': 'Добавьте изображение (Не обязательно) ',
-            'schedule': 'Укажите комфортный для Вас график работы. ',
-            'experience': 'выберите из списка значение соответствующее Вашему опыту работы.  ',
-            'education': 'Выберите из списка Ваш уровень образования. ',
-            'employment_area': 'Укажите регион или город где бы вы хотели трудоустроится. ',
-            
-            'telephone': 'Укажите Ваш телефон. ',
-            'idit_info': 'Здесь можно оставить дополнительную информацию которую Вы не указали в поле "О себе". ',
-            'email': 'Укажите Ваш адрес электронной почты. ',
-            'name_contact': 'Укажите как можно к Вам обращаться (Фамилия, Имя и т.п..',
-            
-    }
-    widgets = {  
-            'author': forms.HiddenInput}
-       
 AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')
-#AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='image')  # 'bb',
-
-
-
-
-
-
 
 
 # Форма комментариев оставленных зарегистрированными пользователями

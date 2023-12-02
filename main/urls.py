@@ -55,7 +55,17 @@ urlpatterns = [
     path('accounts/profile/delete/<int:pk>/', profile_bb_delete,
                                               name='profile_bb_delete'),    # Удаление публикации
     
+    
+    
     path('accounts/profile/add/', profile_bb_add, name='profile_bb_add'),   # Страница добавления публикации
+    
+    
+    
+    
+    
+    
+    
+    
     
     path('accounts/profile/<int:pk>/', profile_bb_detail,
                                        name='profile_bb_detail'),   # Страница сведений о публикации (административная)

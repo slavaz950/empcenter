@@ -20,7 +20,7 @@ from django.db.models import Q
 
 from .models import AdvUser, SubRubric, Bb, Comment
 from .forms import ChangeUserInfoForm, RegisterUserForm, SearchForm, \
-     AIFormSet, UserCommentForm, GuestCommentForm,BbFormVac,BbFormResume
+ UserCommentForm, GuestCommentForm,BbForm , AIFormSet
 from .utilities import signer
 
 # Контроллер для главной страницы
@@ -206,71 +206,35 @@ def profile_bb_detail(request, pk):  # вывод страницы сведен�
     return render(request, 'main/profile_bb_detail.html', context)
 
 
-
-
-
+# ДОБАВЛЕНИЕ ПУБЛИКАЦИИ
 @login_required  # только зарегистрированным пользователям
 def profile_bb_add(request): # Добавление публикации
-   
-    # ПЕРЕДЕЛАННЫЙ КОНТРОЛЛЕР
-    if request.method == 'POST':
-        if request.user.account_type == 'VAC':
-        
-            form = BbFormVac(request.POST, request.FILES)
-        
-            if form.is_valid():
-                bb = form.save()
-            formset = AIFormSet(request.POST, request.FILES, instance=bb)
-            if formset.is_valid():
-                formset.save()
-                messages.add_message(request, messages.SUCCESS,
+    
+   #type_user = request.user.account_type
+   if request.method == 'POST':
+      form = BbForm(request.POST, request.FILES)
+      if form.is_valid():
+        bb = form.save()
+        formset = AIFormSet(request.POST, request.FILES, instance=bb)
+        if formset.is_valid():
+            formset.save()
+            messages.add_message(request, messages.SUCCESS,
                                      'Объявление добавлено')
-                return redirect('main:profile')
-            else:
-                form = BbFormVac(initial={'author': request.user.pk })  # ,'email': request.email.pk
-            formset1 = AIFormSet()
-            context = {'form': form, 'formset': formset}
-            return render(request, 'main/profile_bb_add.html', context)
-        
-    else:
-
-        if request.method == 'POST':
-            form = BbFormResume(request.POST, request.FILES)
-            if form.is_valid():
-                bb = form.save()
-            formset = AIFormSet(request.POST, request.FILES, instance=bb)
-            if formset.is_valid():
-                formset.save()
-                messages.add_message(request, messages.SUCCESS,
-                                     'Объявление добавлено')
-                return redirect('main:profile')
-        else:
-          form = BbFormResume(initial={'author': request.user.pk})   # ,'email': request.email.pk
+        return redirect('main:profile')
+   else:
+        form = BbForm(initial={'author': request.user.pk })  # ,'email': request.email.pk
         formset = AIFormSet()
         context = {'form': form, 'formset': formset}
-    
+        return render(request, 'main/profile_bb_add.html', context)
+        
    
-    return render(request, 'main/profile_bb_add.html', context)
-
-
-
-
-
-
-
 @login_required  #  только зарегистрированным пользователям
 def profile_bb_change(request, pk):  # Исправление публикации
     bb = get_object_or_404(Bb, pk=pk)
     if request.method == 'POST':
-        
-        
-        if request.user.account_type == 'VAC':
-            form = BbFormVac(request.POST, request.FILES, instance=bb)
-        else: 
-       # request.user.account_type == 'RES':
-         form = BbFormResume(request.POST, request.FILES, instance=bb)
-        # form = BbForm(request.POST, request.FILES, instance=bb)
-        if form.is_valid():
+        form = BbForm(request.POST, request.FILES, instance=bb)
+    else: 
+      if form.is_valid():
             bb = form.save()
             formset = AIFormSet(request.POST, request.FILES, instance=bb)
             if formset.is_valid():
@@ -278,14 +242,8 @@ def profile_bb_change(request, pk):  # Исправление публикаци
                 messages.add_message(request, messages.SUCCESS,
                                      'Объявление исправлено')
                 return redirect('main:profile')
-    else:
-        
-        if request.user.account_type == 'VAC':
-            form = BbFormVac(instance=bb)
-        else: 
-         form = BbFormResume(instance=bb)
-        
-       # form = BbForm(instance=bb)
+      else:
+        form = BbForm(instance=bb)
         formset = AIFormSet(instance=bb)
     context = {'form': form, 'formset': formset}
     return render(request, 'main/profile_bb_change.html', context)
