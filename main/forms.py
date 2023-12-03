@@ -10,10 +10,10 @@ from .models import AdvUser, SuperRubric, SubRubric, Bb, AdditionalImage, \
 from .apps import user_registered
 
 
-TYPE_ACCOUNT = (
-    ('VAC', 'Вакансии'),
-    ('RES', 'Резюме'),
-    )
+    #TYPE_ACCOUNT = (
+    # ('VAC', 'Вакансии'),
+    # ('RES', 'Резюме'),
+   # )
 
 # Форма для ввода основных данных
 class ChangeUserInfoForm(forms.ModelForm):
@@ -26,17 +26,17 @@ class ChangeUserInfoForm(forms.ModelForm):
 
 # Форма для занесения сведений о новом пользователе
 class RegisterUserForm(forms.ModelForm):
-    
-    
-    
     email = forms.EmailField(required=True, label='Адрес электронной почты')
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput,
       help_text=password_validation.password_validators_help_text_html())
     password2 = forms.CharField(label='Пароль (повторно)',
       widget=forms.PasswordInput,
       help_text='Введите тот же самый пароль еще раз для проверки')
-    account_type = forms.ChoiceField(label='Тип учётной записи', choices= TYPE_ACCOUNT ,help_text='Выберите, в какой раздел Вы планируете добавлять информицию.')
-    
+   
+    account_add_vacancy = forms.BooleanField(
+                  label='Аккаунт для добавления вакансии (для работодателей)')
+    account_add_resume = forms.BooleanField(
+                  label='Аккаунт для добавления резюме (поиск работы)')
    
 
     def clean_password1(self):
@@ -103,12 +103,12 @@ class BbForm(forms.ModelForm):
     class Meta:
             model = Bb
             #fields = '__all__'
-            fields = ('rubric','title','organization','content','image','schedule','experience','education',
+            fields = ('author','rubric','title','organization','content','image','schedule','experience','education',
                  'empoloyment_area','salary_from','salary_up_to','telephone','email',
                     'name_contact') 
             #'addit_info',
             
-            labels = {'rubric': 'Категория ','title': 'Должность ','content': 'О вакансии/ О себе ','image': 'Изображение ',
+            labels = {'author' : '','rubric': 'Категория ','title': 'Должность ','content': 'О вакансии/ О себе ','image': 'Изображение ',
                 'schedule': 'График работы ','experience': 'Опыт работы ','education': 'Образование ',
                 'empoloyment_area': 'Район трудоустройства ','salary_from': 'Зарплата от ','salary_up_to': 'Зарплата до',
                 'telephone': 'Телефон ','email': 'Электронная почта',
@@ -118,6 +118,7 @@ class BbForm(forms.ModelForm):
     
             help_texts = {'rubric': 'Укажите категорию в которой хотите разместить Вашу публикацию. ',
             'title': 'Укажите Должность) ',
+            'author' : '',
             'content': 'Расскажите, в зависимости от ситуации о вакансии или о себе. ',
             'image': 'Добавьте изображение (Не обязательно) ',
             'schedule': 'Выберите из списка график работы. ',

@@ -63,9 +63,9 @@ class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin,
     form_class = ChangeUserInfoForm
     success_url = reverse_lazy('main:profile')
     success_message = 'Данные пользователя изменены'
-
+# В процессе работы контроллер должен извлечь из модели AdvUser запись представляющую текущего пользователя
     def setup(self, request, *args, **kwargs):
-        self.user_id = request.user.pk
+        self.user_id = request.user.pk  # Получаем ключ текущего пользователя (сохраняем его в атрибуте user_id)
         return super().setup(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
