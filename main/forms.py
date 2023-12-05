@@ -72,10 +72,11 @@ class RegisterUserForm(forms.ModelForm):
 
     class Meta:
         model = AdvUser
-        fields = ('account_type', 
+        fields = ( 
                   'username', 'email', 'password1', 'password2',
                   'first_name', 'last_name', 'send_messages')
 
+#'account_type',
 
 # Форма Рубрик (делаем поле "Надрубрики" SuperRubric обязательным)
 class SubRubricForm(forms.ModelForm):
