@@ -153,7 +153,10 @@ class Bb(models.Model):
    # account = models.CharField(max_length=40, default='Не указан??????', verbose_name='Тип учётной записи')
     name_contact = models.CharField(max_length=100, default='Не указано', verbose_name='ФИО соискателя')
     organization = models.CharField(max_length=100, default='Не указано', verbose_name='Название организации')
-    email = models.EmailField(default='example@mail.ru' ,verbose_name='E-mail')  
+    #email = models.EmailField(default='example@mail.ru' ,verbose_name='E-mail')
+    
+    email = models.EmailField(default=AdvUser.objects.filter() ,verbose_name='E-mail')
+      
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE,
                                verbose_name='Автор публикации')
     is_active = models.BooleanField(default=True, db_index=True,

@@ -97,11 +97,11 @@ class SearchForm(forms.Form):
  # ФОРМА ДЛЯ ДОБАВЛЕНИЯ ПУБЛИКАЦИИ
 class BbForm(forms.ModelForm):
     # Конструктор прописывается для того чтобы в выпадающем списке на странице (в случае если не выбрано
-  # def init(self,*args,**kwargs):   
-    # super().init(*args, **kwargs)  
-   #  self.fields['rubric'].empty_label = 'Категория не выбрана'
+  #def __init__(self,*args,**kwargs):   
+    # super().__init__(*args, **kwargs)  
+    # self.fields['rubric'].empty_label = 'Категория не выбрана'
         
-    class Meta:
+ class Meta:
             model = Bb
             #fields = '__all__'
             fields = ('author','rubric','title','organization','content','image','schedule','experience','education',
