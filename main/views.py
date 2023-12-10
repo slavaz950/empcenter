@@ -215,23 +215,54 @@ def profile_bb_add(request): # Добавление публикации
    if request.method == 'POST':
      form = BbForm(request.POST, request.FILES)
      if form.is_valid():
-        bb = form.save()
-        formset = AIFormSet(request.POST, request.FILES, instance=bb)
-        if formset.is_valid():
+         
+        ''' 
+         if request.user.account_add_vacancy:
+             bb.user.account_adds_vacancy = True
+         else:
+            bb.user.account_adds_resume = True
+            '''
+            
+     bb = form.save()
+     formset = AIFormSet(request.POST, request.FILES, instance=bb)
+     if formset.is_valid():
             formset.save()
             messages.add_message(request, messages.SUCCESS,
                                      'Объявление добавлено')
-        return redirect('main:profile')
+     return redirect('main:profile')
    else:
        # Автоматизируем вставку в поля значений по умолчанию
-        form = BbForm(initial={'author': request.user.pk,
-                               'email': request.user.email,
-                               'account_add_vacancy': request.user.account_add_vacancy, 
-                               'account_add_resume': request.user.account_add_resume }) 
-        formset = AIFormSet()
-        context = {'form': form, 'formset': formset}
-        return render(request, 'main/profile_bb_add.html', context)
+    form = BbForm(initial={'author': request.user.pk,
+                               'email': request.user.email 
+                               ,
+                               'account_adds_vacancy': request.user.account_add_vacancy, 
+                               'account_adds_resume': request.user.account_add_resume })
+    formset = AIFormSet()
+    context = {'form': form, 'formset': formset}
+    return render(request, 'main/profile_bb_add.html', context)
+    
+    """   
+        ---------------------------------------------------------------------------
+      
+           
+     # Контроллер для активации пользователя
+    def user_activate(request, sign):
+    try:
+        username = signer.unsign(sign)
+    except BadSignature:
+        return render(request, 'main/bad_signature.html')
+    user = get_object_or_404(AdvUser, username=username)
+    if user.is_activated:
+        template = 'main/user_is_activated.html'
+    else:
+        template = 'main/activation_done.html'
+        user.is_active = True
+        user.is_activated = True
+        user.save()
+    return render(request, template)
         
+        --------------------------------------------------------------------------
+   """
    
 @login_required  #  только зарегистрированным пользователям
 def profile_bb_change(request, pk):  # Исправление публикации

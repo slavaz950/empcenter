@@ -139,9 +139,9 @@ class BbForm(forms.ModelForm):
             'account_adds_resume': '' 
             
     }
-            widgets = {'author': forms.HiddenInput , # Делаем поле скрытым (значение передаётся автоматически)
-                       'account_addsvacancy': forms.HiddenInput, # Делаем поле скрытым (значение передаётся автоматически)
-                       'account_adds_resume': forms.HiddenInput # Делаем поле скрытым (значение передаётся автоматически)
+            widgets = {'author': forms.HiddenInput  # Делаем поле скрытым (значение передаётся автоматически)
+                      # 'account_adds_vacancy': forms.HiddenInput, # Делаем поле скрытым (значение передаётся автоматически)
+                      # 'account_adds_resume': forms.HiddenInput # Делаем поле скрытым (значение передаётся автоматически)
                         } 
         
 AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')
