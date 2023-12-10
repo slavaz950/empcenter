@@ -18,6 +18,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q
 
+
 from .models import AdvUser, SubRubric, Bb, Comment
 from .forms import ChangeUserInfoForm, RegisterUserForm, SearchForm, \
  UserCommentForm, GuestCommentForm,BbForm , AIFormSet
@@ -209,11 +210,11 @@ def profile_bb_detail(request, pk):  # вывод страницы сведен�
 # ДОБАВЛЕНИЕ ПУБЛИКАЦИИ
 @login_required  # только зарегистрированным пользователям
 def profile_bb_add(request): # Добавление публикации
-    
-   #type_user = request.user.account_type
+   
+  
    if request.method == 'POST':
-      form = BbForm(request.POST, request.FILES)
-      if form.is_valid():
+     form = BbForm(request.POST, request.FILES)
+     if form.is_valid():
         bb = form.save()
         formset = AIFormSet(request.POST, request.FILES, instance=bb)
         if formset.is_valid():
@@ -222,7 +223,11 @@ def profile_bb_add(request): # Добавление публикации
                                      'Объявление добавлено')
         return redirect('main:profile')
    else:
-        form = BbForm(initial={'author': request.user.pk })  # ,'email': request.email.pk
+       # Автоматизируем вставку в поля значений по умолчанию
+        form = BbForm(initial={'author': request.user.pk,
+                               'email': request.user.email,
+                               'account_add_vacancy': request.user.account_add_vacancy, 
+                               'account_add_resume': request.user.account_add_resume }) 
         formset = AIFormSet()
         context = {'form': form, 'formset': formset}
         return render(request, 'main/profile_bb_add.html', context)

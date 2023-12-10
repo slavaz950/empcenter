@@ -163,14 +163,18 @@ class Bb(models.Model):
                                     verbose_name='Выводить в списке?')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True,
                                       verbose_name='Опубликовано')
+    account_adds_vacancy = models.BooleanField(default=False,)
+                 # verbose_name='Аккаунт для добавления вакансии (для работодателей)'
+    account_adds_resume = models.BooleanField(default=False,)
+                 # verbose_name='Аккаунт для добавления резюме (поиск работы)')
 
 
     """
-    В переопределённом методе delete() перед удалением текущей записи мы перебираем и
-    вызовом метода delete() удаляем все связанные дополнительные иллюстрации. При вызове метода delete()
+       В переопределённом методе delete() перед удалением текущей записи мы перебираем и
+       вызовом метода delete() удаляем все связанные дополнительные иллюстрации. При вызове метода delete()
     возникает сигнал post_delete, обрабатываемый приложением django_cleanup, которое в ответ удалит все файлы,
     хранящиеся в удалённой записи.
-    """
+     """
     def delete(self, *args, **kwargs):
         for ai in self.additionalimage_set.all():
             ai.delete()
@@ -180,47 +184,6 @@ class Bb(models.Model):
         verbose_name_plural = 'Публикации' 
         verbose_name = 'Публикация'
         ordering = ['-created_at'] # Сортировка по полю (-) меняет порядок сортировки
-
-
-
-"""
-ТЕСТОВЫЙ ВАРИАНТ МОДЕЛИ ХРАНЯЩЕЙ ПУБЛИКАЦИИ  (ДЛЯ ОБРАЗЦА - ПО ОКОНЧАНИЮ УДАЛИТЬ)
-class Bb(models.Model):
-    rubric = models.ForeignKey(SubRubric, on_delete=models.PROTECT,
-                                          verbose_name='Рубрика')
-    title = models.CharField(max_length=40, verbose_name='Товар')
-    content = models.TextField(verbose_name='Описание')
-    price = models.FloatField(default=0, verbose_name='Цена')
-    contacts = models.TextField(verbose_name='Контакты')
-    image = models.ImageField(blank=True, upload_to=get_timestamp_path,
-                              verbose_name='Изображение')
-    author = models.ForeignKey(AdvUser, on_delete=models.CASCADE,
-                               verbose_name='Автор объявления')
-    is_active = models.BooleanField(default=True, db_index=True,
-                                    verbose_name='Выводить в списке?')
-    created_at = models.DateTimeField(auto_now_add=True, db_index=True,
-                                      verbose_name='Опубликовано')
-
-"""
-"""
-    В переопределённом методе delete() перед удалением текущей записи мы перебираем и
-    вызовом метода delete() удаляем все связанные дополнительные иллюстрации. При вызове метода delete()
-    возникает сигнал post_delete, обрабатываемый приложением django_cleanup, которое в ответ удалит все файлы,
-    хранящиеся в удалённой записи.
-"""
-"""
-    def delete(self, *args, **kwargs):
-        for ai in self.additionalimage_set.all():
-            ai.delete()
-        super().delete(*args, **kwargs)
-
-    class Meta:
-        verbose_name_plural = 'Объявления'
-        verbose_name = 'Объявление'
-        ordering = ['-created_at']
-
-"""
-
 
 
 

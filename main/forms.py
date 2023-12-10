@@ -98,24 +98,27 @@ class SearchForm(forms.Form):
 class BbForm(forms.ModelForm):
     # Конструктор прописывается для того чтобы в выпадающем списке на странице (в случае если не выбрано
   #def __init__(self,*args,**kwargs):   
-    # super().__init__(*args, **kwargs)  
-    # self.fields['rubric'].empty_label = 'Категория не выбрана'
+     #super().__init__(*args, **kwargs)  
+     #self.fields['rubric'].empty_label = 'Категория не выбрана'
         
  class Meta:
             model = Bb
             #fields = '__all__'
             fields = ('author','rubric','title','organization','content','image','schedule','experience','education',
                  'empoloyment_area','salary_from','salary_up_to','telephone','email',
-                    'name_contact') 
-            #'addit_info',
-            
-            labels = {'author' : '','rubric': 'Категория ','title': 'Должность ','content': 'О вакансии/ О себе ','image': 'Изображение ',
+                    'name_contact','account_adds_vacancy','account_adds_resume' ) 
+            # 
+            # 
+                
+            labels = {'author' : 'Имя пользователя','rubric': 'Категория ','title': 'Должность ','content': 'О вакансии/ О себе ','image': 'Изображение ',
                 'schedule': 'График работы ','experience': 'Опыт работы ','education': 'Образование ',
                 'empoloyment_area': 'Район трудоустройства ','salary_from': 'Зарплата от ','salary_up_to': 'Зарплата до',
                 'telephone': 'Телефон ','email': 'Электронная почта',
-                'name_contact': 'Контактное лицо','organization': 'Организация'}
+                'name_contact': 'Контактное лицо','organization': 'Организация',
+                'account_adds_vacancy': 'Вакансия','account_adds_resume': 'Резюме'
+                 }
             
-           # ,'addit_info': 'Дополнительная информация '
+           # 
     
             help_texts = {'rubric': 'Укажите категорию в которой хотите разместить Вашу публикацию. ',
             'title': 'Укажите Должность) ',
@@ -129,12 +132,17 @@ class BbForm(forms.ModelForm):
             'salary_from': 'Укажите минимальный уровень заработной платы. ',
             'salary_up_to': 'Укажите максимальный уровень зарплаты (Если такой предел имеется). Иначе оставьте это поле пустым.  ',
             'telephone': 'Укажите телефон для связи. ',
-           # 'addit_info': 'Здесь можно оставить дополнительную информацию которую Вы не указали в поле "Основная информация". ',
             'email': 'Укажите адрес электронной почты для связи. ',
             'name_contact': 'Укажите как к Вам можно обращаться (Фамилия, Имя и т.п..)',
-            'organization': 'Если вы публикуете вакансию.Укажите название своей организации. При публикации Резюме это поле заполнять не нужно '
+            'organization': 'Если вы публикуете вакансию.Укажите название своей организации. При публикации Резюме это поле заполнять не нужно ',
+            'account_adds_vacancy': '',
+            'account_adds_resume': '' 
+            
     }
-            widgets = {'author': forms.HiddenInput} # Делаем поле скрытым (значение передаётся автоматически)
+            widgets = {'author': forms.HiddenInput , # Делаем поле скрытым (значение передаётся автоматически)
+                       'account_addsvacancy': forms.HiddenInput, # Делаем поле скрытым (значение передаётся автоматически)
+                       'account_adds_resume': forms.HiddenInput # Делаем поле скрытым (значение передаётся автоматически)
+                        } 
         
 AIFormSet = inlineformset_factory(Bb, AdditionalImage, fields='__all__')
 
