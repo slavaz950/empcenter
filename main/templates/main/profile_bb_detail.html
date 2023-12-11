@@ -11,6 +11,7 @@
         {% endif %}
         <div class="col">
             <h2>{{ bb.title }}</h2>
+            <p> Организация:  {{ bb.organization }}</p>
             <p>{{ bb.content }}</p>
             <p> График работы:  {{ bb.schedule }}</p>
             <p> Опыт работы:  {{ bb.experience }}</p>
@@ -18,10 +19,11 @@
             <p> Район трудоустройства: {{ bb.employment_area }}</p>
             <p> Зарплата от:  {{ bb.salary_from }}</p>
             <p> Зарплата до: {{ bb.salary_up_to }}</p>
+            <p> Контактное лицо:  {{ bb.name_contact }}</p>
             <p> Телефон:  {{ bb.telephone }}</p>
             <p> Электронная почта:  {{ bb.email }}</p>
-            <p> Контактное лицо:  {{ bb.name_contact }}</p>
-            <p> Организация:  {{ bb.organization }}</p>
+            
+           
             
 
             <p class="font-weight-bold">{{ bb.price }} руб.</p>
