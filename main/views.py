@@ -240,29 +240,7 @@ def profile_bb_add(request): # Добавление публикации
     formset = AIFormSet()
     context = {'form': form, 'formset': formset}
     return render(request, 'main/profile_bb_add.html', context)
-    
-    """   
-        ---------------------------------------------------------------------------
-      
-           
-     # Контроллер для активации пользователя
-    def user_activate(request, sign):
-    try:
-        username = signer.unsign(sign)
-    except BadSignature:
-        return render(request, 'main/bad_signature.html')
-    user = get_object_or_404(AdvUser, username=username)
-    if user.is_activated:
-        template = 'main/user_is_activated.html'
-    else:
-        template = 'main/activation_done.html'
-        user.is_active = True
-        user.is_activated = True
-        user.save()
-    return render(request, template)
-        
-        --------------------------------------------------------------------------
-   """
+   
    
 @login_required  #  только зарегистрированным пользователям
 def profile_bb_change(request, pk):  # Исправление публикации
