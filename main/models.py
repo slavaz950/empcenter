@@ -172,7 +172,15 @@ class Bb(models.Model):
        вызовом метода delete() удаляем все связанные дополнительные иллюстрации. При вызове метода delete()
     возникает сигнал post_delete, обрабатываемый приложением django_cleanup, которое в ответ удалит все файлы,
     хранящиеся в удалённой записи.
+    
      """
+     
+     # Функция для вывода анонса публикации. В данном случае это 180 символов. Необходимо вызвать эту 
+     # функцию в целевом шаблоне вместо имени поля content
+    def get_summary(self):
+        return self.content[:180]
+     
+     
     def delete(self, *args, **kwargs):
         for ai in self.additionalimage_set.all():
             ai.delete()

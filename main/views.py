@@ -30,6 +30,34 @@ def index(request):
     context = {'bbs': bbs}
     return render(request, 'main/index.html', context)
 
+
+
+
+
+
+
+
+# Контроллер для отображения всех вакансий
+def show_vacancy(request):
+  vacancy = Bb.objects.filter(is_active=True, account_adds_vacancy=True)
+  context = {'vacancy':vacancy}
+  return render (request, 'main/show_vacancy.html', context)
+
+
+
+
+
+
+
+
+# Контроллер для отображения всех резюме
+def show_resume(request):
+    resume = Bb.objects.filter(is_active=True, account_adds_resume=True)
+    context = {'resume':resume}
+    return render (request, 'main/show_resume.html', context)
+
+
+
 # Контроллер для вспомогательных страниц
 def other_page(request, page):
     try:

@@ -17,9 +17,35 @@
         {% endif %}
         <div class="col">
             <h2>{{ bb.title }}</h2>
+
+            {% if bb.account_adds_vacancy %}
+            <p><b>Организация:  </b>{{ bb.organization }}</p>
+            {% endif %}
+
             <p>{{ bb.content }}</p>
-            <p class="font-weight-bold">{{ bb.price }} руб.</p>
-            <p>{{ bb.contacts }}</p>
+            <p><b>Образование:   </b>{{ bb.education }}</p>
+            <p><b>Опыт работы: </b> {{ bb.experience }}</p>
+            <p><b>График работы:  </b> {{ bb.schedule }}</p>
+
+           <!-- <p class="font-weight-bold">{{ bb.price }} руб.</p>   Выделение всей строки целиком -->
+
+
+            {% if bb.account_adds_vacancy %}
+            <p><b>Зарплата от:  </b>{{ bb.salary_from }}</p>
+            <p><b>Зарплата до:  </b>{{ bb.salary_up_to }}</p>
+            <p><b>Телефон для связи:  </b>{{ bb.telephone }}</p>
+            <p><b>Электронная почта:  </b>{{ bb.email }}</p>
+            <p><b>Контактное лицо:  </b>{{ bb.name_contact }}</p>
+            {% endif %}
+
+            {% if bb.account_adds_resume %}
+            <p><b>Телефон для связи:  </b>{{ bb.telephone }}</p>
+            <p><b>Электронная почта:  </b>{{ bb.email }}</p>
+            <p><b>Контактное лицо:  </b>{{ bb.name_contact }}</p>
+            {% endif %}
+
+
+
             <p class="text-right font-italic">Добавлено
             {{ bb.created_at }}</p>
          <!-- Окончание блока с основными сведениями  --> 
