@@ -225,12 +225,16 @@ def by_rubric(request, pk):
     else:
         keyword = ''
     form = SearchForm(initial={'keyword': keyword})
-    paginator = Paginator(bbs, 2)
+    
+    # ПАГИНАТОР
+    paginator = Paginator(bbs, 10)  # Число в параметрах это количество постов выводимых на на одной странице
     if 'page' in request.GET:
         page_num = request.GET['page']
     else:
         page_num = 1
     page = paginator.get_page(page_num)
+    
+    
     context = {'rubric': rubric, 'page': page, 'bbs': page.object_list,
                'form': form}
     return render(request, 'main/by_rubric.html', context)
