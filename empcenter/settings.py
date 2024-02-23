@@ -30,7 +30,7 @@ SECRET_KEY = 'v8p7m8qq23*8cr(ivlh203$1kjn$niz6gdu$33u3wm!-8qi*0m'
 # Включение/выключение  режима DEBUG. 
 # После публикации проекта необходимо поставить  False
 # ПРЕДУПРЕЖДЕНИЕ БЕЗОПАСНОСТИ: не запускайте с включенной отладкой в рабочей среде.
-DEBUG = True    # #     True   False 
+DEBUG = True   # #     True   False 
 
 ALLOWED_HOSTS =  []   #  "http://127.0.0.1:8000/"" #   "192.168.3.45"
 
@@ -205,7 +205,7 @@ THUMBNALL_ALIASES = {
         },
     },
 }
-THUMBNAIL_BASEDIR = 'thumbnail'  # Имя вложенной папки в которой хранятся миниатюры
+THUMBNAIL_BASEDIR = 'thumbnails'  # Имя вложенной папки в которой хранятся миниатюры
 
 # Разрешение доступа к веб-службе (API) с любого домена
 CORS_ORIGIN_ALLOW_ALL = True

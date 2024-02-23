@@ -308,6 +308,7 @@ def profile_bb_change(request, pk):  # Исправление публикаци
     bb = get_object_or_404(Bb, pk=pk)
     if request.method == 'POST':
         form = BbForm(request.POST, request.FILES, instance=bb) 
+        
         if form.is_valid():
             bb = form.save()
             formset = AIFormSet(request.POST, request.FILES, instance=bb)
@@ -319,8 +320,14 @@ def profile_bb_change(request, pk):  # Исправление публикаци
     else:
          form = BbForm(instance=bb)
          formset = AIFormSet(instance=bb)
+        
+        
     context = {'form': form, 'formset': formset}
     return render(request, 'main/profile_bb_change.html', context)
+
+
+
+
 
 @login_required  # только зарегистрированным пользователям
 def profile_bb_delete(request, pk): # Удаление публикации

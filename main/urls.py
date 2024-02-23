@@ -50,22 +50,16 @@ urlpatterns = [
     path('accounts/profile/change/', ChangeUserInfoView.as_view(),
                                      name='profile_change'),   #  Страница правки основных данных
     
+    
+    
     path('accounts/profile/change/<int:pk>/', profile_bb_change,
                                               name='profile_bb_change'),   # Изменение публикации
+    
     
     path('accounts/profile/delete/<int:pk>/', profile_bb_delete,
                                               name='profile_bb_delete'),    # Удаление публикации
     
-    
-    
     path('accounts/profile/add/', profile_bb_add, name='profile_bb_add'),   # Страница добавления публикации
-    
-    
-    
-    
-    
-    
-    
     
     
     path('accounts/profile/<int:pk>/', profile_bb_detail,

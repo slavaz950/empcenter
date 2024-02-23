@@ -13,6 +13,9 @@ urlpatterns = [
     path ('accounts', include("django.contrib.auth.urls"))  # from video
 ]
 
+
+
+
 """
     Если вдруг изображения не будут выводится (ошибка отсутствия страницы или тп)
     раскоментировать этот фрагмент

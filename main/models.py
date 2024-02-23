@@ -178,7 +178,7 @@ class Bb(models.Model):
      # Функция для вывода анонса публикации. В данном случае это 180 символов. Необходимо вызвать эту 
      # функцию в целевом шаблоне вместо имени поля content
     def get_summary(self):
-        return self.content[:180]
+        return self.content[:400]
      
      
     def delete(self, *args, **kwargs):
