@@ -4,7 +4,7 @@
 {% load static %}
 
 {% block content %}
-<h2>Последние 10 публикаций</h2>
+<!--  <h2>Последние 10 публикаций</h2>  -->
 {% if bbs %}
 <ul class="list-unstyled">
     {% for bb in bbs %}
@@ -18,10 +18,18 @@
         {% endif %}
         </a>
         <div class="media-body">
-          <h3><a href="{{ url }}{{ all }}">
-          {{ bb.title }}</a></h3>
-          <div>{{ bb.content }}</div>
-          <p class="text-right font-weight-bold">{{ bb.price }} руб.</p>
+
+          {% if bb.account_adds_vacancy %}
+          <h3><a href="{{ url }}{{ all }}">Вакансия:  {{ bb.title }}</a></h3>
+          {% else %}
+          <h3><a href="{{ url }}{{ all }}">Резюме:  {{ bb.title }}</a></h3>
+          {% endif %}
+
+
+          <!-- <div>{{ bb.content }}</div> -->
+
+          <div>{{ bb.get_summary }}</div> 
+          <!--<p class="text-right font-weight-bold">{{ bb.price }} руб.</p>   -->
           <p class="text-right font-italic">{{ bb.created_at }}</p>
         </div>
     </li>

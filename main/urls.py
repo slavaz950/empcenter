@@ -25,7 +25,8 @@ from .views import index, other_page, BBLoginView, profile, BBLogoutView, \
     RegisterDoneView, user_activate, DeleteUserView, BBPasswordResetView, \
     BBPasswordResetDoneView, BBPasswordResetConfirmView, \
     BBPasswordResetCompleteView, by_rubric, detail, profile_bb_detail, \
-    profile_bb_add, profile_bb_change, profile_bb_delete, show_resume, show_vacancy
+    profile_bb_add, profile_bb_change, profile_bb_delete
+    #, show_resume, show_vacancy
 
 
 app_name = 'main'
@@ -90,14 +91,18 @@ urlpatterns = [
     
     path('<int:rubric_pk>/<int:pk>/', detail, name='detail'),  # Страница сведений о выбранной публикации
     
+    #path('vacancy/', show_vacancy, name='show_vacancy'),   #
+    
+  #  path('resume/', show_resume, name='show_resume'),  
+    
     path('<int:pk>/', by_rubric, name='by_rubric'),   #
     
-    path('vacancy/', show_vacancy, name='show_vacancy'),   #
-    
-    path('resume/', show_resume, name='show_resume'),   #
+   
     
     
     path('<str:page>/', other_page, name='other'),  # Вспомогательные страницы  
+    
+    
     
     path('', index, name='index'),   # Главная страница
 ]

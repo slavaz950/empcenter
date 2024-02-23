@@ -59,13 +59,19 @@
 
 
         <div class="media-body">
-            <h3><a href="{{ url }} {{ all }}">
-            {{ bb.title }}</a></h3>
+
+
+            {% if bb.account_adds_vacancy %}
+            <h3><a href="{{ url }}{{ all }}">Вакансия:  {{ bb.title }}</a></h3>
+            {% else %}
+            <h3><a href="{{ url }}{{ all }}">Резюме:  {{ bb.title }}</a></h3>
+            {% endif %}
+  
             <div>{{ bb.get_summary }}</div>  
             <!-- Анонс публикации (Краткий вывод). Вместо имени поля указываем имя функции объявленной В
             models.py в классе модели публикаций   -->
 
-            <p class="text-right font-weight-bold">{{ bb.price }} руб.</p>
+            <p class="text-right font-weight-bold">{{ bb.salary_from }} - {{ bb.salary_up_to }} руб.</p>
             <p class="text-right font-italic">{{ bb.created }}</p>
             </div>
         </li>

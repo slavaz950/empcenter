@@ -41,73 +41,7 @@
     </form>
 
     <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-            <a class="nav-link text-light   px-3 " 
-            data-toggle="dropdown" href="{% url 'main:show_vacancy' %}">Вакансии</a>
-
-            <div> <!--class="dropdown-menu">-->
-                <!-- ТРЕБУЕТСЯ КОРРЕКТИРОВКА Чтоб отображались именно публикации с вакансиями  
-                возможно имеет смысл создать под каждый раздел шаблон. То есть шаблон "Вакансии"
-            и шаблон "Резюме" соответственно продублировать контроллеры и маршруты. Соответственно здесь
-        нужно тоже сделать необходимые изменения. Ссылки нужно будет подправить-->
-
-
-          <!--       {% for rubric in rubrics %} 
-                {% ifchanged rubric.super_rubric.pk %}
-               
-            <span class="nav-link root font-weight-bold"> 
-                href="{% url 'main:by_rubric' pk=rubric.pk %}">{{ rubric.name }} 
-            {{ rubric.super_rubric.name }}</span>
-            {% endifchanged %}
-            <a class="nav-link" href="{% url 'main:by_rubric' pk=rubric.pk %}">
-                {{ rubric.name }}
-
-                    {% endfor %}  -->
-
-
-
-                <!--{% for super_rubric in super_rubrics %} 
-               
-                    <a class="dropdown-item" href="{% url 'main:index' %}">{{ super_rubric.name }}</a>
         
-                            {% endfor %}  
---> 
-
-
-                </div>
-        </li>
-
-
-<!--  text-uppercase   Текс заглавными буквами -->
-<!--  font-weight-bold  Жирный шрифт -->
-<!--  dropdown-toggle  Добавляет стрелочку к пункту меню вверху справа  -->
-
-
-        <li class="nav-item dropdown">
-            <a class="nav-link text-light  px-3" 
-         
-            href="{% url 'main:show_resume' %}">Резюме</a>
-
-
-          <!--   data-toggle="dropdown" href="{% url 'main:index' %}">Резюме</a>  
-         data-toggle="dropdown" 
-        
-        -->
-          
-
-
-        
-        <div class="dropdown-menu">
-            <!-- ТРЕБУЕТСЯ КОРРЕКТИРОВКА Чтоб отображались именно публикации с резюме  -->
-
-             {% for super_rubric in super_rubrics %} 
-            <a class="dropdown-item" href="{% url 'main:by_rubric' pk=super_rubric.pk %}">{{ super_rubric.name }}</a>
-
-                    {% endfor %}  
-
-
-            </div>
-        </li>
 
 
         {% if user.is_authenticated %}  <!-- Если пользователь авторизован на сайте   -->
@@ -127,10 +61,10 @@
                 <a class="dropdown-item" href="{% url 'main:profile_change' %}">Изменить личные данные</a>
                 <a class="dropdown-item" href="{% url 'main:password_change' %}">Изменить пароль</a>
                 <a class="dropdown-item" href="{% url 'main:profile_delete' %}">Удалить</a>
-               <div class="dropdown-divider"></div>
+               <div class="dropdown-divider"></div>  <!--  Разделитель -->
                <a class="dropdown-item" href="{% url 'main:logout' %}">Выйти</a>
-               <div class="dropdown-divider"></div>
-               <a class="dropdown-item" href="#">Удалить</a>
+            <!--   <div class="dropdown-divider"></div>   Разделитель  -->
+             <!--   <a class="dropdown-item" href="#">Удалить</a>  -->
             </div>
         </li>
 
@@ -183,7 +117,7 @@
     <!-- pt-5   отступ сверху на 5 единиц (padding top (pd))    -->
                         <nav class="col-md-auto nav flex-column border pl-4">
                             <a class="nav-link root pt-15" href="{% url 'main:index' %}">Главная</a>
-                            <span class="nav-link root font-weight-bold">Выделенный заголовок</span>
+                          <!--  <span class="nav-link root font-weight-bold">Выделенный заголовок</span>-->
 
                             {% for rubric in rubrics %} 
                             {% ifchanged rubric.super_rubric.pk %}

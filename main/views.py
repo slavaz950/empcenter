@@ -31,17 +31,48 @@ def index(request):
     return render(request, 'main/index.html', context)
 
 
-
-
-
-
-
+"""
 
 # Контроллер для отображения всех вакансий
-def show_vacancy(request):
-  vacancy = Bb.objects.filter(is_active=True, account_adds_vacancy=True)
-  context = {'vacancy':vacancy}
-  return render (request, 'main/show_vacancy.html', context)
+def show_vacancy(request,pk):
+  #vacancy = Bb.objects.filter(is_active=True, account_adds_vacancy=True)
+  #context = {'vacancy':vacancy}
+ # return render (request, 'main/show_vacancy.html', context)
+
+
+
+
+#def by_rubric(request, pk):
+    rubric = get_object_or_404(SubRubric, pk=pk)
+    #bbs = Bb.objects.filter(is_active=True, rubric=pk)
+    bbs = Bb.objects.filter(is_active=True, account_adds_vacancy=True)
+    if 'keyword' in request.GET:
+        keyword = request.GET['keyword']
+        q = Q(title__icontains=keyword) | Q(content__icontains=keyword)
+        bbs = bbs.filter(q)
+    else:
+        keyword = ''
+    form = SearchForm(initial={'keyword': keyword})
+    paginator = Paginator(bbs, 2)
+    if 'page' in request.GET:
+        page_num = request.GET['page']
+    else:
+        page_num = 1
+    page = paginator.get_page(page_num)
+    #context = {'page': page, 'bbs': page.object_list,'form': form}
+    context = {'rubric': rubric, 'page': page, 'bbs': page.object_list,'form': form}
+    
+    return render (request, 'main/show_vacancy.html', context)
+# return render(request, 'main/by_rubric.html', context)
+
+
+
+#context = {'rubric': rubric, 'page': page, 'bbs': page.object_list,'form': form}
+
+
+
+
+
 
 
 
@@ -56,6 +87,8 @@ def show_resume(request):
     context = {'resume':resume}
     return render (request, 'main/show_resume.html', context)
 
+
+"""
 
 
 # Контроллер для вспомогательных страниц
