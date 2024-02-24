@@ -33,12 +33,17 @@
             {% if bb.account_adds_vacancy %}
             <p><b>Зарплата от:  </b>{{ bb.salary_from }}</p>
             <p><b>Зарплата до:  </b>{{ bb.salary_up_to }}</p>
+            <p> <b>Район трудоустройства:</b> {{ bb.empoloyment_area }}</p>
             <p><b>Телефон для связи:  </b>{{ bb.telephone }}</p>
             <p><b>Электронная почта:  </b>{{ bb.email }}</p>
             <p><b>Контактное лицо:  </b>{{ bb.name_contact }}</p>
             {% endif %}
 
             {% if bb.account_adds_resume %}
+            <p><b>Желаемая зарплата:  </b></p>
+            <p><b>от:  </b>{{ bb.salary_from }}</p>
+            <p><b>до:  </b>{{ bb.salary_up_to }}</p>
+            <p> <b>Район трудоустройства:</b> {{ bb.empoloyment_area }}</p>
             <p><b>Телефон для связи:  </b>{{ bb.telephone }}</p>
             <p><b>Электронная почта:  </b>{{ bb.email }}</p>
             <p><b>Контактное лицо:  </b>{{ bb.name_contact }}</p>
